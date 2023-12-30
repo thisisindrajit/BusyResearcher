@@ -38,7 +38,6 @@ next-env.d.ts
 # scripts
 /scripts/*/node_modules
 /scripts/*/.env
-/scripts/postgres-data-ingestion-old
 
 # Azurite artifacts
 __blobstorage__
