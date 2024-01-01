@@ -8,9 +8,10 @@ import chromadb
 from chromadb.config import Settings
 from dotenv import load_dotenv
 
+# Loading environment variables
 load_dotenv()
 
-# Function to print synchronous logs
+# Function to print logs
 def print_logs(message, type = "info"):
     if type == "error":
         print(f'Error - {message}')

@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -23,15 +23,16 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
+        primary: "hsl(var(--primary))",
+        light: {
+          DEFAULT: "hsl(var(--light))",
+          foreground: "hsl(var(--light-foreground))",
+          secondary: "hsl(var(--light-secondary))",
         },
-        secondary: "var(--secondary)",
-        tertiary: "var(--tertiary)",
         dark: {
-          DEFAULT: "var(--dark)",
-          foreground: "var(--dark-foreground)",
+          DEFAULT: "hsl(var(--dark))",
+          foreground: "hsl(var(--dark-foreground))",
+          secondary: "hsl(var(--dark-secondary))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -54,11 +55,6 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      // borderRadius: {
-      //   lg: "var(--radius)",
-      //   md: "calc(var(--radius) - 2px)",
-      //   sm: "calc(var(--radius) - 4px)",
-      // },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -76,4 +72,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

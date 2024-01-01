@@ -1,13 +1,26 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-    width="952.000000pt" height="980.000000pt" viewBox="0 0 952.000000 980.000000"
-    preserveAspectRatio="xMidYMid meet">
-
-    <g transform="translate(0.000000,980.000000) scale(0.100000,-0.100000)"
-        fill="#fff" stroke="none">
+const SvgLogo = ({
+  height = "24",
+  width = "24",
+}: {
+  height?: string;
+  width?: string;
+}) => {
+  return (
+    <svg
+      version="1.0"
+      xmlns="http://www.w3.org/2000/svg"
+      height={height}
+      width={width}
+      viewBox="0 0 952.000000 980.000000"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <g
+        transform="translate(0.000000,980.000000) scale(0.100000,-0.100000)"
+        className="fill-primary"
+        stroke="none"
+      >
         <path
-            d="M6678 9784 c-431 -67 -799 -392 -921 -814 -125 -430 17 -905 354
+          d="M6678 9784 c-431 -67 -799 -392 -921 -814 -125 -430 17 -905 354
 -1187 l78 -65 -33 -72 c-18 -39 -171 -377 -340 -752 l-308 -681 -76 19 c-43
 10 -129 21 -192 24 -421 22 -822 -195 -1043 -563 -72 -118 -129 -289 -144
 -428 l-8 -70 -879 0 -879 0 -18 75 c-50 212 -161 403 -327 562 -566 541 -1490
@@ -42,6 +55,11 @@ m-5696 -3654 c301 -77 517 -340 535 -651 8 -130 -14 -237 -74 -360 -39 -81
 262 26 353 4z m-4748 -480 c73 -22 174 -76 230 -124 65 -56 143 -177 170 -263
 32 -101 31 -264 -1 -357 -61 -174 -199 -314 -370 -374 -80 -28 -245 -33 -331
 -11 -256 66 -440 301 -440 562 0 99 15 164 60 258 83 172 240 290 433 325 66
-11 180 4 249 -16z" />
-    </g>
-</svg>
+11 180 4 249 -16z"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export default SvgLogo;

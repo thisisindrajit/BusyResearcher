@@ -8,20 +8,20 @@
 :root {
   --primary-font: "Cabinet Grotesk", sans-serif;
   --secondary-font: "Satoshi", sans-serif;
-  --primary: #f56e0f;
-  --primary-foreground: #fbfbfb;
-  --secondary: #878787;
-  --tertiary: #262626;
-  --dark: #151419;
-  --dark-foreground: #1b1b1e;
+  --primary: 25 92% 51%;
+  --light: 0 0% 98%;
+  --light-foreground: 0 0% 0%;
+  --light-secondary: 0 0% 95%;
+  --dark: 252 11% 9%;
+  --dark-foreground: 0 0% 100%;
+  --dark-secondary: 0 0% 15%;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-  }
-} */
+html {
+  @apply p-4 lg:p-6;
+}
 
 body {
-  @apply p-4 lg:p-6 bg-dark;
+  @apply bg-light dark:bg-dark;
   font-family: var(--primary-font);
 }
