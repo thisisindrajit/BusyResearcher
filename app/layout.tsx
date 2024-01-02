@@ -4,13 +4,17 @@ import ThemeProvider from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "BusyResearcher",
-  // description: "",
+  description: "Intelligent search for busy researchers.",
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <head>
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@1,900,700,500,301,701,300,501,401,901,400,2&f[]=cabinet-grotesk@1,800,500,100,700,400,300,200,900&display=swap"
+          rel="stylesheet"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

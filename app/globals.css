@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.cdnfonts.com/css/cabinet-grotesk");
-@import url("https://fonts.cdnfonts.com/css/satoshi");
-
 :root {
   --primary-font: "Cabinet Grotesk", sans-serif;
   --secondary-font: "Satoshi", sans-serif;
