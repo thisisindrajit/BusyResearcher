@@ -42,7 +42,7 @@ const Home = () => {
               </Button>
             </div>
           </div>
-          <div className="bg-secondary/10 text-secondary p-2">
+          <div className="bg-secondary/10 text-secondary leading-relaxed p-2 text-center w-full sm:w-4/5 lg:w-fit">
             Semantically search across{" "}
             <span className="font-bold">{abbreviateNumber(articlesCount)}</span>{" "}
             scholarly articles from Arxiv spanning various categories!
