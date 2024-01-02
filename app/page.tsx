@@ -3,10 +3,12 @@
 import TopBar from "@/components/TopBar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { abbreviateNumber } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 const Home = () => {
+  const articlesCount = 1234567;
   const ref = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -26,12 +28,12 @@ const Home = () => {
           </div>
           {/* Search bar */}
           <div className="w-full sm:w-4/5 lg:w-3/5">
-            <div className="border border-dark dark:border-light flex items-center gap-1 p-1 rounded-xl w-full">
+            <div className="border border-foreground flex items-center gap-1 p-1.5 rounded-[0.9rem] w-full">
               <input
                 ref={ref}
                 type="text"
                 placeholder="Search for any topic..."
-                className="p-2 bg-light dark:bg-dark outline-none flex-grow"
+                className="p-2 bg-background outline-none flex-grow"
                 maxLength={200}
               />
               <Button className="flex items-center justify-center gap-1.5 w-10 p-0 sm:w-fit sm:px-4 sm:py-2">
@@ -39,6 +41,11 @@ const Home = () => {
                 <span className="hidden sm:block">Search</span>
               </Button>
             </div>
+          </div>
+          <div className="bg-secondary/10 text-secondary p-2">
+            Semantically search across{" "}
+            <span className="font-bold">{abbreviateNumber(articlesCount)}</span>{" "}
+            scholarly articles from Arxiv spanning various categories!
           </div>
         </div>
       </div>
@@ -108,13 +115,13 @@ const Home = () => {
               intelligence for advancing science.
             </span>
           </p>
-          <div className="bg-primary w-fit text-light">
+          <div className="bg-primary w-fit text-background dark:text-foreground">
             Thank you to arXiv for use of its open access interoperability.
           </div>
         </div>
       </div>
       {/* Copyright banner */}
-      <div className="fixed bg-light-secondary dark:bg-dark-secondary border-x border-t border-dark/25 dark:border-light/25 p-2 right-4 lg:right-6 bottom-0 text-sm">
+      <div className="fixed bg-secondary-foreground border-x border-t border-foreground/25 p-2 right-4 lg:right-6 bottom-0 text-sm">
         Copyright © {new Date().getFullYear()}, BusyResearcher
       </div>
     </>

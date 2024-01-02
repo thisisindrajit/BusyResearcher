@@ -30,20 +30,15 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: "hsl(var(--primary))",
-        light: {
-          DEFAULT: "hsl(var(--light))",
-          foreground: "hsl(var(--light-foreground))",
-          secondary: "hsl(var(--light-secondary))",
-        },
-        dark: {
-          DEFAULT: "hsl(var(--dark))",
-          foreground: "hsl(var(--dark-foreground))",
-          secondary: "hsl(var(--dark-secondary))",
-        },
+        secondary: "hsl(var(--secondary))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        "secondary-foreground": "hsl(var(--secondary-foreground))",
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        ring: "hsl(var(--ring))",
       },
       keyframes: {
         "accordion-down": {
