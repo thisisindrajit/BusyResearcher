@@ -22,10 +22,10 @@
 }
 
 html {
-  @apply w-full;
+  @apply w-full mb-12;
 }
 
 body {
-  @apply bg-light dark:bg-dark flex flex-col min-h-screen m-auto p-4 lg:p-6 xl:max-w-[1440px] 2xl:max-w-[1920px];
+  @apply bg-light dark:bg-dark flex flex-col min-h-[100dvh] m-auto p-4 lg:p-6 xl:max-w-[1440px] 2xl:max-w-[1920px];
   font-family: var(--primary-font);
 }
