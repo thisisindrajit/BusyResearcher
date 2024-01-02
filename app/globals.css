@@ -15,13 +15,11 @@
   --dark: 252 11% 9%;
   --dark-foreground: 0 0% 100%;
   --dark-secondary: 0 0% 15%;
-}
-
-html {
-  @apply p-4 lg:p-6;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
 }
 
 body {
-  @apply bg-light dark:bg-dark;
+  @apply bg-light dark:bg-dark flex flex-col min-h-screen m-auto p-4 lg:p-6 xl:max-w-[1440px] 2xl:max-w-[1920px];
   font-family: var(--primary-font);
 }
