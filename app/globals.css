@@ -16,6 +16,15 @@
   --destructive-foreground: 0 0% 98%;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+  -moz-tap-highlight-color: transparent;
+}
+
+html {
+  @apply w-full;
+}
+
 body {
   @apply bg-light dark:bg-dark flex flex-col min-h-screen m-auto p-4 lg:p-6 xl:max-w-[1440px] 2xl:max-w-[1920px];
   font-family: var(--primary-font);
