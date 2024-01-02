@@ -113,7 +113,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* Footer */}
+      {/* Copyright banner */}
       <div className="fixed bg-light-secondary dark:bg-dark-secondary border-x border-t border-dark/25 dark:border-light/25 p-2 right-4 lg:right-6 bottom-0 text-sm">
         Copyright © {new Date().getFullYear()}, BusyResearcher
       </div>
