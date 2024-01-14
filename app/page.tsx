@@ -9,10 +9,10 @@ async function getTotalCountFromApi() {
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
+    throw new Error("Failed to fetch total count from API!");
   }
 
-  return res.json();
+  return { success: res.ok, data: await res.json() };
 }
 
 const Home = async () => {
@@ -31,13 +31,15 @@ const Home = async () => {
           </div>
           {/* Search bar */}
           <SearchBar />
-          <div className="bg-secondary/10 text-secondary leading-relaxed p-2 text-center w-full sm:w-4/5 lg:w-fit">
-            Semantically search across{" "}
-            <span className="font-bold">
-              {abbreviateNumber(totalCountData.count)}
-            </span>{" "}
-            scholarly articles from arXiv spanning various categories!
-          </div>
+          {totalCountData.success && (
+            <div className="bg-secondary/10 text-secondary leading-relaxed p-2 text-center w-full sm:w-4/5 lg:w-fit">
+              Semantically search across{" "}
+              <span className="font-bold">
+                {abbreviateNumber(totalCountData.data.count)}
+              </span>{" "}
+              scholarly articles from arXiv spanning various categories!
+            </div>
+          )}
         </div>
       </div>
       {/* What is busy researcher? */}
