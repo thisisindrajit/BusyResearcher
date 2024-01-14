@@ -1,19 +1,22 @@
-"use client";
-
+import SearchBar from "@/components/SearchBar";
 import TopBar from "@/components/TopBar";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { abbreviateNumber } from "@/lib/utils";
-import { Search } from "lucide-react";
-import { useEffect, useRef } from "react";
 
-const Home = () => {
-  const articlesCount = 1234567;
-  const ref = useRef<HTMLInputElement | null>(null);
+async function getTotalCount() {
+  // We need to provide the full URL here because this function is called in the server
+  const res = await fetch(`${process.env.BASE_URL}/api/totalCount`);
 
-  useEffect(() => {
-    ref.current?.focus();
-  }, []);
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+const Home = async () => {
+  const totalCountData = await getTotalCount();
 
   return (
     <>
@@ -27,25 +30,13 @@ const Home = () => {
             <span className="text-primary">busy researchers.</span>
           </div>
           {/* Search bar */}
-          <div className="w-full sm:w-4/5 lg:w-3/5">
-            <div className="border border-foreground flex items-center gap-1 p-1.5 rounded-[0.9rem] w-full">
-              <input
-                ref={ref}
-                type="text"
-                placeholder="Search for any topic..."
-                className="p-2 bg-background outline-none flex-grow"
-                maxLength={200}
-              />
-              <Button className="flex items-center justify-center gap-1.5 w-10 p-0 sm:w-fit sm:px-4 sm:py-2">
-                <Search className="h-3.5 w-3.5 mb-0.5" />
-                <span className="hidden sm:block">Search</span>
-              </Button>
-            </div>
-          </div>
+          <SearchBar />
           <div className="bg-secondary/10 text-secondary leading-relaxed p-2 text-center w-full sm:w-4/5 lg:w-fit">
             Semantically search across{" "}
-            <span className="font-bold">{abbreviateNumber(articlesCount)}</span>{" "}
-            scholarly articles from Arxiv spanning various categories!
+            <span className="font-bold">
+              {abbreviateNumber(totalCountData.count)}
+            </span>{" "}
+            scholarly articles from arXiv spanning various categories!
           </div>
         </div>
       </div>
@@ -70,13 +61,13 @@ const Home = () => {
               target="_blank"
               className="text-primary underline"
             >
-              Arxiv
+              arXiv
             </a>
             , the popular preprint repository containing millions of scholarly
             articles across STEM fields.
           </p>
           <p>
-            While Arxiv has grown exponentially over the years, researchers
+            While arXiv has grown exponentially over the years, researchers
             often struggle to sift through this vast database to find articles
             relevant to their work. BusyResearcher brings the power of{" "}
             <span className="font-bold">semantic search</span> to tackle this
@@ -89,7 +80,7 @@ const Home = () => {
           </p>
           {/* <p>
             In addition, BusyResearcher also has a social aspect lacking in
-            arxiv. Users can save papers to curated collections and see which
+            arXiv. Users can save papers to curated collections and see which
             articles are trending based on likes and shares. This fosters an
             interactive environment to evaluate the significance of papers.
             Researchers can leverage crowdsourced ratings to supplement metrics
