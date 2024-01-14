@@ -3,9 +3,9 @@ import TopBar from "@/components/TopBar";
 import { Separator } from "@/components/ui/separator";
 import { abbreviateNumber } from "@/lib/utils";
 
-async function getTotalCount() {
+async function getTotalCountFromApi() {
   // We need to provide the full URL here because this function is called in the server
-  const res = await fetch(`${process.env.BASE_URL}/api/totalCount`);
+  const res = await fetch(`${process.env.BASE_URL}/api/getTotalCount`);
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -16,7 +16,7 @@ async function getTotalCount() {
 }
 
 const Home = async () => {
-  const totalCountData = await getTotalCount();
+  const totalCountData = await getTotalCountFromApi();
 
   return (
     <>
