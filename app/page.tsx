@@ -8,7 +8,7 @@ import { ITotalCountData } from "./api/getTotalCount/route";
 async function getTotalCountFromApi() {
   // We need to provide the full URL here because this function is called in the server
   const apiResponse = await fetch(`${process.env.BASE_URL}/api/getTotalCount`, {
-    next: { revalidate: 0 }, // Revalidate everytime the page is loaded
+    next: { revalidate: 900 }, // Revalidate every 15 minutes
   });
 
   const jsonResponse: IApiResponse<ITotalCountData> = await apiResponse.json();
@@ -41,8 +41,7 @@ const Home = async () => {
             <div className="bg-secondary/10 text-secondary leading-relaxed p-2 text-center w-full sm:w-4/5 lg:w-fit">
               Semantically search across{" "}
               <span className="font-bold">
-                {/* {abbreviateNumber(totalCountData.data.count)} */}
-                {totalCountData.data.count}
+                {abbreviateNumber(totalCountData.data.count)}
               </span>{" "}
               scholarly articles from arXiv spanning various categories!
             </div>
