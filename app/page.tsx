@@ -3,22 +3,28 @@ export const runtime = "edge"
 import SearchBar from "@/components/SearchBar";
 import TopBar from "@/components/TopBar";
 import { Separator } from "@/components/ui/separator";
+import { IApiResponse } from "@/interfaces/IApiResponse";
 import { abbreviateNumber } from "@/lib/utils";
+import { ITotalCountData } from "./api/getTotalCount/route";
 
 async function getTotalCountFromApi() {
   // We need to provide the full URL here because this function is called in the server
-  const res = await fetch(`${process.env.BASE_URL}/api/getTotalCount`);
+  const apiResponse = await fetch(`${process.env.BASE_URL}/api/getTotalCount`, {
+    next: { revalidate: 3600 }, // Revalidate every 1 hour
+  });
 
-  if (!res.ok) {
+  const jsonResponse: IApiResponse<ITotalCountData> = await apiResponse.json();
+
+  if (!jsonResponse.success) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch total count from API!");
+    throw new Error(jsonResponse.message || "Some error occurred while fetching total count!");
   }
 
-  return { success: res.ok, data: await res.json() };
+  return jsonResponse;
 }
 
 const Home = async () => {
-  const totalCountData = await getTotalCountFromApi();
+  const totalCountData: IApiResponse<ITotalCountData> = await getTotalCountFromApi();
 
   return (
     <>

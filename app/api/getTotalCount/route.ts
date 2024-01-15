@@ -1,19 +1,47 @@
+import { IApiResponse } from "@/interfaces/IApiResponse";
 import conn from "@/lib/db";
 
-export async function GET(): Promise<Response> {
-  try {
-    const query = "SELECT SUM(total_ingested) FROM public.arxiv_categories;";
-    if (conn) {
-      const res = await conn.query(query);
+export interface ITotalCountData {
+  count?: number;
+}
 
-      return Response.json({ count: res.rows[0].sum }, { status: 200 });
-    } else {
-      return Response.json(
-        { error: "Connection to database failed" },
-        { status: 500 }
-      );
+export async function GET(): Promise<Response> {
+  let apiResponse: IApiResponse<ITotalCountData>;
+
+  try {
+    if (!conn) {
+      apiResponse = {
+        success: false,
+        message: "Error while fetching total count: Connection to database failed!",
+        data: {
+          count: undefined
+        },
+      };
+
+      return Response.json(apiResponse, { status: 500 });
     }
+    const query = "SELECT SUM(total_ingested) FROM public.arxiv_categories;";
+
+    const res = await conn.query(query);
+
+    apiResponse = {
+      success: true,
+      message: "Total count of scholarly articles ingested",
+      data: {
+        count: res.rows[0].sum,
+      },
+    };
+
+    return Response.json(apiResponse, { status: 200 });
   } catch (error) {
-    return Response.json({ error: error }, { status: 500 });
+    apiResponse = {
+      success: false,
+      message: `Error while fetching total count: ${error}`,
+      data: {
+        count: undefined
+      },
+    };
+
+    return Response.json(apiResponse, { status: 500 });
   }
 }
