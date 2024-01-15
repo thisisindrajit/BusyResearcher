@@ -1,5 +1,3 @@
-export const runtime = "edge"
-
 import SearchBar from "@/components/SearchBar";
 import TopBar from "@/components/TopBar";
 import { Separator } from "@/components/ui/separator";
