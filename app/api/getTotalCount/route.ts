@@ -18,7 +18,7 @@ export async function GET(): Promise<Response> {
         data: {
           count: undefined
         },
-        respondedAt: new Date().toLocaleString()
+        respondedAt:  new Date().toUTCString()
       };
 
       return Response.json(apiResponse, { status: 500 });
@@ -33,7 +33,7 @@ export async function GET(): Promise<Response> {
       data: {
         count: res.rows[0].sum,
       },
-      respondedAt: new Date().toLocaleString()
+      respondedAt:  new Date().toUTCString()
     };
 
     return Response.json(apiResponse, { status: 200 });
