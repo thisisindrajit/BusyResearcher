@@ -7,9 +7,7 @@ import { ITotalCountData } from "./api/getTotalCount/route";
 
 async function getTotalCountFromApi() {
   // We need to provide the full URL here because this function is called in the server
-  const apiResponse = await fetch(`${process.env.BASE_URL}/api/getTotalCount`, {
-    next: { revalidate: 3600 }, // Revalidate every 1 hour
-  });
+  const apiResponse = await fetch(`${process.env.BASE_URL}/api/getTotalCount`);
 
   const jsonResponse: IApiResponse<ITotalCountData> = await apiResponse.json();
 

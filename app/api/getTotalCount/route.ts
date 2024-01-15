@@ -1,4 +1,4 @@
-// export const runtime = "edge"
+export const revalidate = 0;
 
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import conn from "@/lib/db";
