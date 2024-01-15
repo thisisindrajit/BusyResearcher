@@ -1,3 +1,4 @@
+// Revalidate is set to 0 because the data is changing constantly and so it must be fetched on every request.
 export const revalidate = 0;
 
 import { IApiResponse } from "@/interfaces/IApiResponse";
@@ -14,11 +15,12 @@ export async function GET(): Promise<Response> {
     if (!conn) {
       apiResponse = {
         success: false,
-        message: "Error while fetching total count: Connection to database failed!",
+        message:
+          "Error while fetching total count: Connection to database failed!",
         data: {
-          count: undefined
+          count: undefined,
         },
-        respondedAt:  new Date().toUTCString()
+        respondedAt: new Date().toUTCString(),
       };
 
       return Response.json(apiResponse, { status: 500 });
@@ -33,7 +35,7 @@ export async function GET(): Promise<Response> {
       data: {
         count: res.rows[0].sum,
       },
-      respondedAt:  new Date().toUTCString()
+      respondedAt: new Date().toUTCString(),
     };
 
     return Response.json(apiResponse, { status: 200 });
@@ -42,9 +44,9 @@ export async function GET(): Promise<Response> {
       success: false,
       message: `Error while fetching total count: ${error}`,
       data: {
-        count: undefined
+        count: undefined,
       },
-      respondedAt: new Date().toUTCString()
+      respondedAt: new Date().toUTCString(),
     };
 
     return Response.json(apiResponse, { status: 500 });
