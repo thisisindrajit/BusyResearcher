@@ -1,8 +1,6 @@
 # BusyResearcher
 
-This is the official repository for BusyResearcher.
-
-This project is being done as a submission for the Hashnode x MindsDB December 2023 hackathon.
+This is the official repository for BusyResearcher - Intelligent search for busy researchers.
 
 Thank you to arXiv for use of its open access interoperability.
 

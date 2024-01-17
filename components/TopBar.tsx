@@ -3,6 +3,7 @@ import ThemeToggle from "./ThemeToggle";
 import SvgLogo from "./SvgLogo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 const TopBar: React.FC = ({ className }: { className?: string }) => {
   return (
@@ -19,8 +20,12 @@ const TopBar: React.FC = ({ className }: { className?: string }) => {
       {/* Right side menu */}
       <div className="flex items-center gap-2">
         <ThemeToggle />
-        <Button variant="outline">Register</Button>
-        <Button>Login</Button>
+        <RegisterLink postLoginRedirectURL="/user/welcome">
+          <Button variant="outline">Register</Button>
+        </RegisterLink>
+        <LoginLink postLoginRedirectURL="/user">
+          <Button>Login</Button>
+        </LoginLink>
       </div>
     </div>
   );
