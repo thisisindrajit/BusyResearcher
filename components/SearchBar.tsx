@@ -15,7 +15,7 @@ const SearchBar = () => {
     <div className="w-full sm:w-4/5 lg:w-3/5">
       <div className="border border-foreground flex items-center gap-1 p-1.5 rounded-[0.9rem] w-full">
         <input
-          // ref={ref}
+          ref={ref}
           type="text"
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
