@@ -42,11 +42,11 @@ const CSearchBar = () => {
           className="flex items-center justify-center gap-1.5 w-10 p-0 sm:w-fit sm:px-4 sm:py-2"
         >
           <Search height={14} width={14} />
-          <span className="hidden sm:block mt-0.5">Search</span>
+          <span className="hidden sm:block mt-1">Search</span>
         </Button>
       </form>
       <div className="flex items-baseline w-full gap-2 text-foreground/75">
-        <Info height={14} width={14} className="min-w-fit m-auto mt-[5px]" />
+        <Info height={14} width={14} className="min-w-fit m-auto mt-1.5" />
         <div className="text-sm/loose text-justify">
           {`For optimal results, enter the precise topic you're searching for. For
           instance, if you're looking for scholarly articles on Large Language
