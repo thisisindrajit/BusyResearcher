@@ -5,11 +5,11 @@
 :root {
   --primary-font: "Cabinet Grotesk", sans-serif;
   --secondary-font: "Satoshi", sans-serif;
-  --primary: 256 68% 67%;
-  --secondary: 173 80% 25%;
+  --primary: 257 68% 71%;
+  --secondary: 173 80% 32%;
   --background: 0 0% 95%;
   --foreground: 0 0% 0%;
-  --secondary-foreground: 0 0% 90%;
+  --tertiary: 0 0% 90%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
   --ring: 0 0% 0%;
@@ -19,7 +19,7 @@
   --secondary: 178 67% 73%;
   --background: 252 11% 9%;
   --foreground: 0 0% 100%;
-  --secondary-foreground: 0 0% 15%;
+  --tertiary: 0 0% 15%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
   --ring: 53 100% 69%;

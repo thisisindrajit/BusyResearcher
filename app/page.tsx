@@ -15,21 +15,24 @@ async function getTotalCountFromApi(): Promise<IApiResponse<ITotalCountData>> {
 
   if (!jsonResponse.success) {
     // This will activate the closest `error.js` Error Boundary
-    throw new Error(jsonResponse.message || "Some error occurred while fetching total count!");
+    throw new Error(
+      jsonResponse.message || "Some error occurred while fetching total count!"
+    );
   }
 
   return jsonResponse;
 }
 
 const Home = async () => {
-  const totalCountData: IApiResponse<ITotalCountData> = await getTotalCountFromApi();
+  const totalCountData: IApiResponse<ITotalCountData> =
+    await getTotalCountFromApi();
 
   return (
     <>
-      {/* Topbar, motto and search bar */}
-      <div className="h-[75dvh] flex flex-col gap-4">
-        <TopBar />
-        <div className="flex flex-col flex-grow items-center justify-center gap-4 md:gap-8">
+      <TopBar />
+      {/* Motto and search bar */}
+      <div className="min-h-[50dvh] my-12 flex flex-col gap-4">
+        <div className="flex flex-col flex-grow items-center justify-center gap-4 md:gap-6">
           {/* Motto */}
           <div className="text-3xl/snug lg:text-4xl/snug xl:text-5xl/snug">
             <span className="font-bold">Intelligent search</span> for{" "}
@@ -114,13 +117,13 @@ const Home = async () => {
               intelligence for advancing science.
             </span>
           </p>
-          <div className="bg-primary w-fit text-background dark:text-foreground">
+          <div className="bg-primary w-fit text-background">
             Thank you to arXiv for use of its open access interoperability.
           </div>
         </div>
       </div>
       {/* Copyright banner */}
-      <div className="fixed bg-secondary-foreground border-x border-t border-foreground/25 p-2 right-4 lg:right-6 bottom-0 text-sm">
+      <div className="fixed bg-tertiary border-x border-t border-foreground/25 p-2 right-4 lg:right-6 bottom-0 text-sm">
         Copyright © {new Date().getFullYear()}, BusyResearcher
       </div>
     </>

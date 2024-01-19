@@ -6,14 +6,14 @@ const SvgLoading = ({
   width?: string;
 }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 512 512">
+    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 512 512" className="min-w-fit">
       <g transform="matrix(0, 1, -1, 0, 470.501556, 21.386433)">
         <g>
           <circle
             style={{
-              fill: "rgba(112, 98, 192, 0)",
+              fill: "rgba(160, 132, 232, 0)",
               strokeWidth: "5.9135px",
-              stroke: "rgb(112, 98, 192)",
+              stroke: "rgb(160, 132, 232)",
             }}
             cx="234.513"
             cy="255.899"
@@ -24,9 +24,9 @@ const SvgLoading = ({
           <circle
             id="1"
             style={{
-              fill: "rgb(112, 98, 192)",
+              fill: "rgb(160, 132, 232)",
               strokeWidth: "5.9135px",
-              stroke: "rgb(112, 98, 192)",
+              stroke: "rgb(160, 132, 232)",
             }}
             cx="234.513"
             cy="255.899"
@@ -36,9 +36,9 @@ const SvgLoading = ({
           <circle
             id="2"
             style={{
-              fill: "rgb(112, 98, 192)",
+              fill: "rgb(160, 132, 232)",
               strokeWidth: "5.9135px",
-              stroke: "rgb(112, 98, 192)",
+              stroke: "rgb(160, 132, 232)",
             }}
             cx="234.513"
             cy="255.899"
@@ -48,9 +48,9 @@ const SvgLoading = ({
           <circle
             id="3"
             style={{
-              fill: "rgb(112, 98, 192)",
+              fill: "rgb(160, 132, 232)",
               strokeWidth: "5.9135px",
-              stroke: "rgb(112, 98, 192)",
+              stroke: "rgb(160, 132, 232)",
             }}
             cx="234.513"
             cy="255.899"
@@ -60,9 +60,9 @@ const SvgLoading = ({
           <circle
             id="4"
             style={{
-              fill: "rgb(112, 98, 192)",
+              fill: "rgb(160, 132, 232)",
               strokeWidth: "5.9135px",
-              stroke: "rgb(112, 98, 192)",
+              stroke: "rgb(160, 132, 232)",
             }}
             cx="234.513"
             cy="255.899"
@@ -72,9 +72,9 @@ const SvgLoading = ({
           <circle
             id="5"
             style={{
-              fill: "rgb(112, 98, 192)",
+              fill: "rgb(160, 132, 232)",
               strokeWidth: "5.9135px",
-              stroke: "rgb(112, 98, 192)",
+              stroke: "rgb(160, 132, 232)",
             }}
             cx="234.513"
             cy="255.899"
