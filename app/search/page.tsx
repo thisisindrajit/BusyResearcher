@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ISearchResultsData } from "../api/search/[query]/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 
-const search = () => {
+const Search = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
 
@@ -51,7 +51,7 @@ const search = () => {
     <div>
       {searchResults.data.map((d) => {
         return (
-          <div>
+          <div key={d.id}>
             {d.id} - {d.title}
           </div>
         );
@@ -60,4 +60,4 @@ const search = () => {
   );
 };
 
-export default search;
+export default Search;
