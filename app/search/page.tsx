@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { ISearchResultsData } from "../api/search/[query]/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
+import LoadingHolder from "@/components/holder/LoadingHolder";
+import { Separator } from "@/components/ui/separator";
+import TopBar from "@/components/TopBar";
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -40,7 +43,7 @@ const Search = () => {
   });
 
   if (isPending) {
-    return <div>Loading search results...</div>;
+    return <LoadingHolder text={`Semantically searching for "${query}"...`} />;
   }
 
   if (isError) {
@@ -48,15 +51,23 @@ const Search = () => {
   }
 
   return (
-    <div>
-      {searchResults.data.map((d) => {
-        return (
-          <div key={d.id}>
-            {d.id} - {d.title}
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <TopBar />
+      <div>
+        <div className="text-2xl">
+          Search results for{" "}
+          <span className="text-primary font-bold">{query}</span>
+        </div>
+        <Separator className="my-4 bg-primary" />
+        {searchResults.data.map((d) => {
+          return (
+            <div key={d.id}>
+              {d.id} - {d.title}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

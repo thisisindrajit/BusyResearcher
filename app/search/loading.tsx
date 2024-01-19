@@ -1,5 +1,7 @@
+import LoadingHolder from "@/components/holder/LoadingHolder";
+
 const SearchLoading = () => {
-  return <div>Loading search page...</div>;
+  return <LoadingHolder text="Loading search page..." />;
 };
 
 export default SearchLoading;

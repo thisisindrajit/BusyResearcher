@@ -39,7 +39,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           href="/favicons/safari-pinned-tab.svg"
           color="#5bbad5"
         />
-        <meta name="msapplication-TileColor" content="#f56e0f" />
+        <meta name="msapplication-TileColor" content="#7062C0" />
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body>
@@ -52,7 +52,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           >
             {children}
           </CThemeProvider>
-        </CQueryClientProvider>{" "}
+        </CQueryClientProvider>
       </body>
     </html>
   );

@@ -5,17 +5,18 @@
 :root {
   --primary-font: "Cabinet Grotesk", sans-serif;
   --secondary-font: "Satoshi", sans-serif;
-  --primary: 25 92% 51%;
-  --secondary: 339 54% 55%;
-  --background: 0 0% 98%;
+  --primary: 249 43% 57%;
+  --secondary: 173 80% 32%;
+  --background: 0 0% 95%;
   --foreground: 0 0% 0%;
-  --secondary-foreground: 0 0% 95%;
+  --secondary-foreground: 0 0% 90%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
   --ring: 0 0% 0%;
 }
 
 .dark {
+  --secondary: 178 67% 73%;
   --background: 252 11% 9%;
   --foreground: 0 0% 100%;
   --secondary-foreground: 0 0% 15%;
@@ -30,6 +31,6 @@
 }
 
 body {
-  @apply bg-background flex flex-col min-h-[100dvh] mb-12 m-auto p-4 lg:p-6 xl:max-w-[1440px] 2xl:max-w-[1920px];
+  @apply bg-background flex flex-col gap-12 m-auto p-4 lg:p-6 min-h-[100dvh] xl:max-w-[1440px] 2xl:max-w-[1920px];
   font-family: var(--primary-font);
 }

@@ -20,10 +20,10 @@ const TopBar: React.FC = ({ className }: { className?: string }) => {
       {/* Right side menu */}
       <div className="flex items-center gap-2">
         <CThemeToggle />
-        <RegisterLink postLoginRedirectURL="/user/welcome">
+        <RegisterLink postLoginRedirectURL="/user/welcome" tabIndex={-1}>
           <Button variant="outline">Register</Button>
         </RegisterLink>
-        <LoginLink postLoginRedirectURL="/user">
+        <LoginLink postLoginRedirectURL="/user" tabIndex={-1}>
           <Button>Login</Button>
         </LoginLink>
       </div>
