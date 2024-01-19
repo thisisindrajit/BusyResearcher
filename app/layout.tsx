@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ThemeProvider from "@/components/ThemeProvider";
+import CThemeProvider from "@/components/CThemeProvider";
+import CQueryClientProvider from "@/components/CQueryClientProvider";
 
 export const metadata: Metadata = {
   title: "BusyResearcher",
@@ -42,14 +43,16 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <CQueryClientProvider>
+          <CThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </CThemeProvider>
+        </CQueryClientProvider>{" "}
       </body>
     </html>
   );

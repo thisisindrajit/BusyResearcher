@@ -12,28 +12,15 @@ export async function GET(): Promise<Response> {
   let apiResponse: IApiResponse<ITotalCountData>;
 
   try {
-    if (!conn) {
-      apiResponse = {
-        success: false,
-        message:
-          "Error while fetching total count: Connection to database failed!",
-        data: {
-          count: undefined,
-        },
-        respondedAt: new Date().toUTCString(),
-      };
+    const sqlQuery = "SELECT SUM(total_ingested) FROM public.arxiv_categories;";
 
-      return Response.json(apiResponse, { status: 500 });
-    }
-    const query = "SELECT SUM(total_ingested) FROM public.arxiv_categories;";
-
-    const res = await conn.query(query);
+    const res = await conn?.query(sqlQuery);
 
     apiResponse = {
       success: true,
       message: "Total count of scholarly articles ingested",
       data: {
-        count: res.rows[0].sum,
+        count: res?.rows[0].sum,
       },
       respondedAt: new Date().toUTCString(),
     };

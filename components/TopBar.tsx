@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import ThemeToggle from "./ThemeToggle";
+import CThemeToggle from "./CThemeToggle";
 import SvgLogo from "./SvgLogo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const TopBar: React.FC = ({ className }: { className?: string }) => {
       </Link>
       {/* Right side menu */}
       <div className="flex items-center gap-2">
-        <ThemeToggle />
+        <CThemeToggle />
         <RegisterLink postLoginRedirectURL="/user/welcome">
           <Button variant="outline">Register</Button>
         </RegisterLink>
