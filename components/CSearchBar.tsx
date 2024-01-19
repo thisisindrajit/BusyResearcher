@@ -48,10 +48,10 @@ const CSearchBar = () => {
       <div className="flex items-baseline w-full gap-2 text-foreground/75">
         <Info height={14} width={14} className="min-w-fit m-auto mt-[5px]" />
         <div className="text-sm/loose text-justify">
-          For optimal results, enter the precise topic you're searching for. For
+          {`For optimal results, enter the precise topic you're searching for. For
           instance, if you're looking for scholarly articles on Large Language
           Models, enter "Large Language Models" instead of abbreviations like
-          "LLMs."
+          "LLMs."`}
         </div>
       </div>
     </div>
