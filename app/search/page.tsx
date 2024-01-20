@@ -92,12 +92,12 @@ const Search = () => {
                   )}
                   {d.published && (
                     <div className="text-xs flex gap-2 items-center w-fit font-bold text-secondary">
-                      <CalendarDays height={14} width={14} className="min-w-fit mb-0.5"/>
+                      <CalendarDays height={14} width={14} className="min-w-fit mb-[3.5px]"/>
                       {convertToPrettyDateFormat(d.published)}
                     </div>
                   )}
                 </div>
-                <div className="text-justify leading-loose text-foreground/85 dark:text-foreground/70">
+                <div className="text-justify leading-loose text-foreground/85 dark:text-foreground/70 line-clamp-[10] md:line-clamp-6">
                   <Latex>{d.abstract}</Latex>
                 </div>
                 {d.categories.length > 0 && (
