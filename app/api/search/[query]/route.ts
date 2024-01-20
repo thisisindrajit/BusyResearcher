@@ -9,11 +9,10 @@ export interface ISearchResultsData {
   id: string;
   title: string;
   abstract: string;
+  category_ids: string[];
   categories: string[];
   authors: string[];
   published: Date;
-  is_embedding_created: boolean;
-  added_at: Date;
   comment?: string;
 }
 
@@ -54,7 +53,7 @@ export async function GET(
 
     let results: string[] = [];
 
-    const resultsWithWhereDocument = await collection.query({
+    const resultsWithWhereDocumentFilter = await collection.query({
       queryTexts: query,
       nResults: nResults,
       whereDocument: {
@@ -63,25 +62,31 @@ export async function GET(
       include: [],
     });
 
-    // console.log("NR 1", resultsWithWhereDocument.ids[0].length);
+    // console.log("1", resultsWithWhereDocumentFilter.ids[0]);
 
     // If the results with where document are less than half of the required results, then get the rest of the results without the where document.
-    if (resultsWithWhereDocument.ids[0].length <= Math.floor(nResults / 2)) {
-      const resultsWithoutWhereDocument = await collection.query({
+    if (
+      resultsWithWhereDocumentFilter.ids[0].length <= Math.floor(nResults / 2)
+    ) {
+      const resultsWithoutWhereDocumentFilter = await collection.query({
         queryTexts: query,
         nResults: nResults,
         include: [],
       });
 
-      // console.log("NR 2", resultsWithoutWhereDocument.ids[0].length);
+      // console.log(
+      //   "2",
+      //   resultsWithWhereDocumentFilter.ids[0],
+      //   resultsWithoutWhereDocumentFilter.ids[0]
+      // );
 
-      results = resultsWithWhereDocument.ids[0].concat(
-        resultsWithoutWhereDocument.ids[0]
+      results = resultsWithWhereDocumentFilter.ids[0].concat(
+        resultsWithoutWhereDocumentFilter.ids[0]
       );
     } else {
-      results = resultsWithWhereDocument.ids[0];
+      results = resultsWithWhereDocumentFilter.ids[0];
     }
-    
+
     const lenOfResults = results.length;
 
     // If no results are found, return a 404.
@@ -96,17 +101,41 @@ export async function GET(
       return Response.json(apiResponse, { status: 404 });
     }
 
-    const preparedStatementPlaceholders = [];
-
+    const preparedStatementPlaceholders: string[] = [];
+    const sqlQueryOrderBy: string[] = [];
+    
     for (let i = 1; i <= lenOfResults; i++) {
       preparedStatementPlaceholders.push(`$${i}`);
+      sqlQueryOrderBy.push(`WHEN $${i} THEN ${i}`);
     }
 
-    const sqlQuery = `SELECT * FROM public.scholarly_articles 
-    WHERE id in ${`(${preparedStatementPlaceholders.join(",")})`}`;
+    // The query is constructed in this way to ensure that the results are returned in the same order as the results from the ChromaDB query (based on the distances or similarity scores).
+    const sqlQuery = `WITH unnested_categories AS (
+      SELECT id, unnest(categories) as category_ids
+      FROM public.scholarly_articles
+      WHERE id in ${`(${preparedStatementPlaceholders.join(",")})`} 
+    ),
+    extended_aggregated_categories AS (
+      SELECT a.id, array_agg(b.category_title) as categories
+        FROM unnested_categories a
+        INNER JOIN public.arxiv_categories b
+        ON a.category_ids = b.id
+        GROUP BY a.id
+    )
+    SELECT b.id, b.title, b.abstract, b.categories as category_ids, a.categories, b.authors, b.published, b.comment 
+    FROM extended_aggregated_categories a 
+    INNER JOIN public.scholarly_articles b
+    ON a.id = b.id
+    ORDER BY
+    CASE a.id
+        ${sqlQueryOrderBy.join("\n")}
+      END;
+    `
+
+    // console.log(sqlQuery);
 
     const res = await conn?.query(sqlQuery, results);
-
+    
     const resData: ISearchResultsData[] | undefined = res?.rows;
 
     apiResponse = {

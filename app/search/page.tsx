@@ -10,6 +10,7 @@ import TopBar from "@/components/TopBar";
 import Latex from "react-latex-next";
 import { convertToPrettyDateFormat } from "@/lib/utils";
 import { CalendarDays } from "lucide-react";
+import Link from "next/link";
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -92,24 +93,30 @@ const Search = () => {
                   )}
                   {d.published && (
                     <div className="text-xs flex gap-2 items-center w-fit font-bold text-secondary">
-                      <CalendarDays height={14} width={14} className="min-w-fit mb-[3.5px]"/>
+                      <CalendarDays
+                        height={14}
+                        width={14}
+                        className="min-w-fit mb-[3.5px]"
+                      />
                       {convertToPrettyDateFormat(d.published)}
                     </div>
                   )}
                 </div>
-                <div className="text-justify leading-loose text-foreground/80 dark:text-foreground/70 line-clamp-[8] md:line-clamp-6">
+                <div className="text-justify leading-loose text-foreground/80 dark:text-foreground/70">
                   <Latex>{d.abstract}</Latex>
                 </div>
                 {d.categories.length > 0 && (
                   <div className="flex flex-wrap gap-2">
                     {d.categories.map((c, index) => {
                       return (
-                        <span
+                        <Link
+                          href={`/category/${d.category_ids[index]}`}
+                          target="_blank"
                           key={index}
                           className="text-primary text-xs border border-primary font-bold rounded-lg p-2"
                         >
                           {c}
-                        </span>
+                        </Link>
                       );
                     })}
                   </div>
