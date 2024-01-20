@@ -106,7 +106,7 @@ const Search = () => {
                       return (
                         <span
                           key={index}
-                          className="text-primary text-xs dark:bg-primary/5 border border-primary font-bold rounded-lg p-2"
+                          className="text-primary text-xs border border-primary font-bold rounded-lg p-2"
                         >
                           {c}
                         </span>
