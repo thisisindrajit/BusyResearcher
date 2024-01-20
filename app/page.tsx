@@ -123,7 +123,7 @@ const Home = async () => {
         </div>
       </div>
       {/* Copyright banner */}
-      <div className="fixed bg-tertiary border-x border-t border-foreground/25 p-2 right-4 lg:right-6 bottom-0 text-sm">
+      <div className="w-fit self-end font-bold p-2 text-sm">
         Copyright © {new Date().getFullYear()}, BusyResearcher
       </div>
     </>

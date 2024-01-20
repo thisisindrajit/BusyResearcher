@@ -7,6 +7,9 @@ import { IApiResponse } from "@/interfaces/IApiResponse";
 import LoadingHolder from "@/components/holder/LoadingHolder";
 import { Separator } from "@/components/ui/separator";
 import TopBar from "@/components/TopBar";
+import Latex from "react-latex-next";
+import { convertToPrettyDateFormat } from "@/lib/utils";
+import { CalendarDays } from "lucide-react";
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -59,13 +62,62 @@ const Search = () => {
           <span className="text-primary font-bold">{query}</span>
         </div>
         <Separator className="my-4 bg-primary" />
-        {searchResults.data.map((d) => {
-          return (
-            <div key={d.id}>
-              {d.id} - {d.title}
-            </div>
-          );
-        })}
+        <div className="flex flex-col gap-4">
+          {searchResults.data.map((d) => {
+            return (
+              <div
+                className="flex flex-col gap-4 border border-foreground/25 rounded-md p-6 backdrop-blur-md bg-white/5"
+                key={d.id}
+              >
+                <div className="flex flex-col gap-2">
+                  <a
+                    href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${d.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-2xl text-primary font-bold hover:underline w-fit"
+                  >
+                    <Latex>{d.title}</Latex>
+                  </a>
+                  {d.authors.length > 0 && (
+                    <div className="leading-loose">
+                      {d.authors.map((a, index) => {
+                        return (
+                          <span key={index} className="font-bold">
+                            {a}
+                            {index !== d.authors.length - 1 && ", "}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {d.published && (
+                    <div className="text-xs flex gap-2 items-center w-fit font-bold text-secondary">
+                      <CalendarDays height={14} width={14} className="min-w-fit mb-0.5"/>
+                      {convertToPrettyDateFormat(d.published)}
+                    </div>
+                  )}
+                </div>
+                <div className="text-justify leading-loose text-foreground/85 dark:text-foreground/70">
+                  <Latex>{d.abstract}</Latex>
+                </div>
+                {d.categories.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {d.categories.map((c, index) => {
+                      return (
+                        <span
+                          key={index}
+                          className="text-primary text-sm border border-primary font-bold rounded-md p-2"
+                        >
+                          {c}
+                        </span>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );

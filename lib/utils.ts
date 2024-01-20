@@ -25,9 +25,47 @@ export function sanitize(input: string) {
     '"': "&quot;",
     "'": "&#x27;",
     "/": "&#x2F;",
-    "`": "&grave;"
+    "`": "&grave;",
   };
 
   const reg = /[&<>"'/]/gi;
   return input.replace(reg, (match) => map[match]);
+}
+
+export function convertToPrettyDateFormat(input: Date) {
+  let createdDate = new Date(input);
+
+  const date = createdDate.getDate();
+  const month = createdDate.getMonth() + 1;
+  const year = createdDate.getFullYear();
+
+  const hours =
+    createdDate.getHours() > 12
+      ? createdDate.getHours() - 12
+      : createdDate.getHours() === 0
+      ? 12
+      : createdDate.getHours();
+
+  const minutes =
+    createdDate.getMinutes() < 10
+      ? "0" + createdDate.getMinutes()
+      : createdDate.getMinutes();
+  const amOrPm = createdDate.getHours() >= 12 ? "PM" : "AM";
+
+  let fullDate = `${date}/${month}/${year}`;
+
+  let today = new Date();
+
+  if (
+    createdDate.toLocaleDateString() ===
+    new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    ).toLocaleDateString()
+  ) {
+    fullDate = "TODAY";
+  }
+
+  return `${fullDate} AT ${hours}:${minutes} ${amOrPm}`;
 }

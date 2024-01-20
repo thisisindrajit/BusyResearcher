@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useRef } from "react";
 import { Info, Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { sanitize } from "@/lib/utils";
 
 const CSearchBar = () => {
   const ref = useRef<HTMLInputElement | null>(null);
@@ -21,7 +22,10 @@ const CSearchBar = () => {
       return;
     }
 
-    router.push(`/search?q=${ref.current?.value}`);
+    // Sanitize the query to prevent XSS attacks.
+    const query = sanitize(ref.current.value.trim());
+
+    router.push(`/search?q=${query}`);
   };
 
   return (

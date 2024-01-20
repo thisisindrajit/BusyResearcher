@@ -1,6 +1,5 @@
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import conn from "@/lib/db";
-import { sanitize } from "@/lib/utils";
 import {
   ChromaClient,
   DefaultEmbeddingFunction
@@ -26,8 +25,7 @@ export async function GET(
   { params }: { params: { query: string } }
 ): Promise<Response> {
   let apiResponse: IApiResponse<ISearchResultsData[]>;
-  // Sanitize the query to prevent XSS attacks.
-  const query = sanitize(params.query.trim());
+  const query = params.query;
 
   // If the query is empty, return a 400.
   if (!query || query.length === 0) {
@@ -63,7 +61,7 @@ export async function GET(
     });
 
     const sqlQuery = `SELECT * FROM public.scholarly_articles 
-    WHERE id in ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) ORDER BY published DESC;`;
+    WHERE id in ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`;
 
     const res = await conn?.query(sqlQuery, results.ids[0]);
 
