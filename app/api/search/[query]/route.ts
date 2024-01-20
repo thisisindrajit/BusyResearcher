@@ -2,8 +2,7 @@ import { IApiResponse } from "@/interfaces/IApiResponse";
 import conn from "@/lib/db";
 import { ChromaClient, DefaultEmbeddingFunction } from "chromadb";
 
-// Revalidate is set to 0 because the data is changing constantly and so it must be fetched on every request.
-export const revalidate = 0;
+export const revalidate = 900; // Revalidate is set to 15 minutes because the data is not changing constantly and so it need not be fetched on every request.
 
 export interface ISearchResultsData {
   id: string;

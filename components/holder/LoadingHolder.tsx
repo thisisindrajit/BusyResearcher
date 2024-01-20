@@ -1,5 +1,6 @@
 import { FC } from "react";
 import SvgLoading from "../SvgLoading";
+import { Separator } from "../ui/separator";
 
 interface ILoadingHolderProps {
   text: string;
@@ -7,9 +8,10 @@ interface ILoadingHolderProps {
 
 const LoadingHolder: FC<ILoadingHolderProps> = ({ text }) => {
   return (
-    <div className="flex items-center justify-center gap-2 w-fit m-auto px-6">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-2 w-fit m-auto px-6">
       <SvgLoading />
-      <span className="hidden sm:block">{text}</span>
+      <Separator className="md:hidden my-4 bg-foreground/10" />
+      <span className="text-center leading-relaxed">{text}</span>
     </div>
   );
 };

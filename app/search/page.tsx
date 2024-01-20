@@ -47,7 +47,11 @@ const Search = () => {
   });
 
   if (isPending) {
-    return <LoadingHolder text={`Semantically searching for "${query}"...`} />;
+    return (
+      <LoadingHolder
+        text={`Semantically searching 🤔 for "${query}"...`}
+      />
+    );
   }
 
   if (isError) {
@@ -115,7 +119,7 @@ const Search = () => {
                           key={index}
                           className="text-primary text-xs border border-primary font-bold rounded-lg p-2"
                         >
-                          {c}
+                          {c} ({d.category_ids[index]})
                         </Link>
                       );
                     })}
