@@ -1,9 +1,6 @@
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import conn from "@/lib/db";
-import {
-  ChromaClient,
-  DefaultEmbeddingFunction
-} from "chromadb";
+import { ChromaClient, DefaultEmbeddingFunction } from "chromadb";
 
 // Revalidate is set to 0 because the data is changing constantly and so it must be fetched on every request.
 export const revalidate = 0;
@@ -25,6 +22,7 @@ export async function GET(
   { params }: { params: { query: string } }
 ): Promise<Response> {
   let apiResponse: IApiResponse<ISearchResultsData[]>;
+  const nResults = 10;
   const query = params.query;
 
   // If the query is empty, return a 400.
@@ -54,22 +52,66 @@ export async function GET(
       embeddingFunction: new DefaultEmbeddingFunction(),
     });
 
-    const results = await collection.query({
+    let results: string[] = [];
+
+    const resultsWithWhereDocument = await collection.query({
       queryTexts: query,
-      nResults: 15,
+      nResults: nResults,
+      whereDocument: {
+        $contains: query,
+      },
       include: [],
     });
 
-    const sqlQuery = `SELECT * FROM public.scholarly_articles 
-    WHERE id in ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`;
+    // console.log("NR 1", resultsWithWhereDocument.ids[0].length);
 
-    const res = await conn?.query(sqlQuery, results.ids[0]);
+    // If the results with where document are less than half of the required results, then get the rest of the results without the where document.
+    if (resultsWithWhereDocument.ids[0].length <= Math.floor(nResults / 2)) {
+      const resultsWithoutWhereDocument = await collection.query({
+        queryTexts: query,
+        nResults: nResults,
+        include: [],
+      });
+
+      // console.log("NR 2", resultsWithoutWhereDocument.ids[0].length);
+
+      results = resultsWithWhereDocument.ids[0].concat(
+        resultsWithoutWhereDocument.ids[0]
+      );
+    } else {
+      results = resultsWithWhereDocument.ids[0];
+    }
+    
+    const lenOfResults = results.length;
+
+    // If no results are found, return a 404.
+    if (lenOfResults === 0) {
+      apiResponse = {
+        success: true,
+        message: `No results found for query - ${query}`,
+        data: [],
+        respondedAt: new Date().toUTCString(),
+      };
+
+      return Response.json(apiResponse, { status: 404 });
+    }
+
+    const preparedStatementPlaceholders = [];
+
+    for (let i = 1; i <= lenOfResults; i++) {
+      preparedStatementPlaceholders.push(`$${i}`);
+    }
+
+    const sqlQuery = `SELECT * FROM public.scholarly_articles 
+    WHERE id in ${`(${preparedStatementPlaceholders.join(",")})`}`;
+
+    const res = await conn?.query(sqlQuery, results);
 
     const resData: ISearchResultsData[] | undefined = res?.rows;
 
     apiResponse = {
       success: true,
-      message: `Results for query - ${query}`,
+      message: `Results for query - ${query} (Result count - ${lenOfResults}))`,
       data: resData || [],
       respondedAt: new Date().toUTCString(),
     };

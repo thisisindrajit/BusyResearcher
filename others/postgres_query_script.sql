@@ -11,4 +11,10 @@ DESC;
 
 SELECT pg_size_pretty(pg_total_relation_size('public.scholarly_articles'));
 
-SELECT * FROM public.scholarly_articles WHERE id='quant-ph/9801057v2';
+SELECT * FROM public.scholarly_articles WHERE id='2303.13621v1';
+
+SELECT COUNT(id) FROM public.scholarly_articles;
+
+-- ids of articles where the abstract does not end with full stop but with a number (basically % 
+-- seems to doing something and cutting off the abstract during ingestion)
+SELECT id FROM public.scholarly_articles WHERE abstract ~* '\d$' AND abstract !~* '\.$';
