@@ -66,7 +66,7 @@ const Search = () => {
           {searchResults.data.map((d) => {
             return (
               <div
-                className="flex flex-col gap-4 border border-foreground/25 rounded-md p-6 backdrop-blur-md bg-white/5"
+                className="flex flex-col gap-4 border border-foreground/30 dark:border-foreground/25 rounded-md p-6 backdrop-blur-md bg-light-foreground/5"
                 key={d.id}
               >
                 <div className="flex flex-col gap-2">
@@ -97,7 +97,7 @@ const Search = () => {
                     </div>
                   )}
                 </div>
-                <div className="text-justify leading-loose text-foreground/85 dark:text-foreground/70 line-clamp-[10] md:line-clamp-6">
+                <div className="text-justify leading-loose text-foreground/80 dark:text-foreground/70 line-clamp-[8] md:line-clamp-6">
                   <Latex>{d.abstract}</Latex>
                 </div>
                 {d.categories.length > 0 && (
@@ -106,7 +106,7 @@ const Search = () => {
                       return (
                         <span
                           key={index}
-                          className="text-primary text-sm border border-primary font-bold rounded-md p-2"
+                          className="text-primary text-xs dark:bg-primary/5 border border-primary font-bold rounded-lg p-2"
                         >
                           {c}
                         </span>
