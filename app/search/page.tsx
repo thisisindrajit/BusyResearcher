@@ -48,9 +48,7 @@ const Search = () => {
 
   if (isPending) {
     return (
-      <LoadingHolder
-        text={`Semantically searching 🤔 for "${query}"...`}
-      />
+      <LoadingHolder text={`Semantically searching 🤔 for "${query}"...`} />
     );
   }
 
@@ -68,6 +66,11 @@ const Search = () => {
         </div>
         <Separator className="my-4 bg-primary" />
         <div className="flex flex-col gap-4">
+          {searchResults.data.length === 0 && (
+            <div className="my-4 text-center text-destructive m-auto font-bold">
+              No results found!
+            </div>
+          )}
           {searchResults.data.map((d) => {
             return (
               <div
@@ -85,14 +88,20 @@ const Search = () => {
                   </a>
                   {d.authors.length > 0 && (
                     <div className="leading-loose">
-                      {d.authors.map((a, index) => {
+                      {d.authors.slice(0, 50).map((a, index) => {
                         return (
                           <span key={index} className="font-bold">
                             {a}
-                            {index !== d.authors.length - 1 && ", "}
+                            {index !== d.authors.slice(0, 50).length - 1 &&
+                              ", "}
                           </span>
                         );
                       })}
+                      {d.authors.length > 50 && (
+                        <span className="font-bold">
+                          {` + ${d.authors.length - 50} authors`}...
+                        </span>
+                      )}
                     </div>
                   )}
                   {d.published && (

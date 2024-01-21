@@ -1,8 +1,12 @@
 import { IApiResponse } from "@/interfaces/IApiResponse";
-import conn from "@/lib/db";
 import { ChromaClient, DefaultEmbeddingFunction } from "chromadb";
+import conn from "@/lib/db";
 
-export const revalidate = 900; // Revalidate is set to 15 minutes because the data is not changing constantly and so it need not be fetched on every request.
+// Set revalidate to 0 seconds (no revalidating).
+export const revalidate = 0;
+
+// Setting runtime to 'edge'.
+export const runtime = 'edge';
 
 export interface ISearchResultsData {
   id: string;
@@ -102,7 +106,7 @@ export async function GET(
 
     const preparedStatementPlaceholders: string[] = [];
     const sqlQueryOrderBy: string[] = [];
-    
+
     for (let i = 1; i <= lenOfResults; i++) {
       preparedStatementPlaceholders.push(`$${i}`);
       sqlQueryOrderBy.push(`WHEN $${i} THEN ${i}`);
@@ -129,12 +133,12 @@ export async function GET(
     CASE a.id
         ${sqlQueryOrderBy.join("\n")}
       END;
-    `
+    `;
 
     // console.log(sqlQuery);
 
     const res = await conn?.query(sqlQuery, results);
-    
+
     const resData: ISearchResultsData[] | undefined = res?.rows;
 
     apiResponse = {
