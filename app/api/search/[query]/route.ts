@@ -2,11 +2,8 @@ import { IApiResponse } from "@/interfaces/IApiResponse";
 import { ChromaClient, DefaultEmbeddingFunction } from "chromadb";
 import conn from "@/lib/db";
 
-// Set revalidate to 0 seconds (no revalidating).
+// Revalidate is set to 0 because the data is changing constantly and so it must be fetched on every request.
 export const revalidate = 0;
-
-// Setting runtime to 'edge'.
-export const runtime = 'edge';
 
 export interface ISearchResultsData {
   id: string;
@@ -25,7 +22,8 @@ export async function GET(
 ): Promise<Response> {
   let apiResponse: IApiResponse<ISearchResultsData[]>;
   const nResults = 10;
-  const query = params.query;
+  const maxQueryLength = 100;
+  const query = params.query.substring(0, maxQueryLength + 1);
 
   // If the query is empty, return a 400.
   if (!query || query.length === 0) {
@@ -56,39 +54,49 @@ export async function GET(
 
     let results: string[] = [];
 
-    const resultsWithWhereDocumentFilter = await collection.query({
+    const resultsWithoutWhereDocumentFilter = await collection.query({
       queryTexts: query,
       nResults: nResults,
-      whereDocument: {
-        $contains: query,
-      },
       include: [],
     });
 
-    // console.log("1", resultsWithWhereDocumentFilter.ids[0]);
+    results = resultsWithoutWhereDocumentFilter.ids[0];
 
-    // If the results with where document are less than half of the required results, then get the rest of the results without the where document.
-    if (
-      resultsWithWhereDocumentFilter.ids[0].length <= Math.floor(nResults / 2)
-    ) {
-      const resultsWithoutWhereDocumentFilter = await collection.query({
-        queryTexts: query,
-        nResults: nResults,
-        include: [],
-      });
+    // NOTE: COMMENTED OUT THIS CODE BECAUSE IT TAKES MORE THAN 10 SECONDS TO EXECUTE AND IS GREATER THAN THE LIMIT OF VERCEL FREE TIER.
 
-      // console.log(
-      //   "2",
-      //   resultsWithWhereDocumentFilter.ids[0],
-      //   resultsWithoutWhereDocumentFilter.ids[0]
-      // );
+    // const resultsWithWhereDocumentFilter = await collection.query({
+    //   queryTexts: query,
+    //   nResults: nResults,
+    //   whereDocument: {
+    //     $contains: query,
+    //   },
+    //   include: [],
+    // });
 
-      results = resultsWithWhereDocumentFilter.ids[0].concat(
-        resultsWithoutWhereDocumentFilter.ids[0]
-      );
-    } else {
-      results = resultsWithWhereDocumentFilter.ids[0];
-    }
+    // // console.log("1", resultsWithWhereDocumentFilter.ids[0]);
+
+    // // If the results with where document are less than half of the required results, then get the rest of the results without the where document.
+    // if (
+    //   resultsWithWhereDocumentFilter.ids[0].length <= Math.floor(nResults / 2)
+    // ) {
+    //   const resultsWithoutWhereDocumentFilter = await collection.query({
+    //     queryTexts: query,
+    //     nResults: nResults,
+    //     include: [],
+    //   });
+
+    //   // console.log(
+    //   //   "2",
+    //   //   resultsWithWhereDocumentFilter.ids[0],
+    //   //   resultsWithoutWhereDocumentFilter.ids[0]
+    //   // );
+
+    //   results = resultsWithWhereDocumentFilter.ids[0].concat(
+    //     resultsWithoutWhereDocumentFilter.ids[0]
+    //   );
+    // } else {
+    //   results = resultsWithWhereDocumentFilter.ids[0];
+    // }
 
     const lenOfResults = results.length;
 

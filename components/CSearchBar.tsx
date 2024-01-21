@@ -39,7 +39,7 @@ const CSearchBar = () => {
           type="text"
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
-          maxLength={200}
+          maxLength={100}
         />
         <Button
           type="submit"

@@ -1,8 +1,8 @@
-// Revalidate is set to 0 because the data is changing constantly and so it must be fetched on every request.
-export const revalidate = 0;
-
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import conn from "@/lib/db";
+
+// Revalidate is set to 0 because the data is changing constantly and so it must be fetched on every request.
+export const revalidate = 0;
 
 export interface ITotalCountData {
   count?: number;
