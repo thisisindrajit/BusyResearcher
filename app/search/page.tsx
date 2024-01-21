@@ -2,13 +2,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { ISearchResultsData } from "../api/search/[query]/route";
+import { ISearchResultsData } from "../api/search/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import LoadingHolder from "@/components/holder/LoadingHolder";
 import { Separator } from "@/components/ui/separator";
 import TopBar from "@/components/TopBar";
 import Latex from "react-latex-next";
-import { convertToPrettyDateFormat } from "@/lib/utils";
+import { convertToPrettyDateFormat, sanitize } from "@/lib/utils";
 import { CalendarDays } from "lucide-react";
 import Link from "next/link";
 
@@ -20,7 +20,13 @@ const Search = () => {
     query: string
   ): Promise<IApiResponse<ISearchResultsData[]>> => {
     // We need to provide the full URL here because this function is called in the server
-    const apiResponse = await fetch(`api/search/${query}`);
+    const apiResponse = await fetch(`api/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query }),
+    });
 
     const jsonResponse: IApiResponse<ISearchResultsData[]> =
       await apiResponse.json();
@@ -60,7 +66,7 @@ const Search = () => {
     <>
       <TopBar />
       <div>
-        <div className="text-2xl">
+        <div className="text-2xl/relaxed">
           Search results for{" "}
           <span className="text-primary font-bold">{query}</span>
         </div>
@@ -115,8 +121,8 @@ const Search = () => {
                     </div>
                   )}
                 </div>
-                <div className="text-justify leading-loose text-foreground/80 dark:text-foreground/70">
-                  <Latex>{d.abstract}</Latex>
+                <div className="text-justify leading-loose text-foreground/80 dark:text-foreground/70 line-clamp-[8] md:line-clamp-6">
+                  <Latex>{sanitize(d.abstract)}</Latex>
                 </div>
                 {d.categories.length > 0 && (
                   <div className="flex flex-wrap gap-2">
