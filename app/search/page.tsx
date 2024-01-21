@@ -15,6 +15,7 @@ import Link from "next/link";
 const Search = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
+  const exact = searchParams.get("exact");
 
   const getSearchResults = async (
     query: string
@@ -25,7 +26,7 @@ const Search = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, exact }),
     });
 
     const jsonResponse: IApiResponse<ISearchResultsData[]> =
@@ -50,11 +51,12 @@ const Search = () => {
   } = useQuery<IApiResponse<ISearchResultsData[]>>({
     queryKey: ["search", query || ""],
     queryFn: ({ queryKey }) => getSearchResults(queryKey[1] as string),
+    retry: 3, // Retry 3 times before failing
   });
 
   if (isPending) {
     return (
-      <LoadingHolder text={`Semantically searching 🤔 for "${query}"...`} />
+      <LoadingHolder text={`Semantically searching 🤔 for "${query}"`} />
     );
   }
 

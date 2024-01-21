@@ -1,17 +1,22 @@
 "use client";
 
-import { FormEvent, useEffect, useRef } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Info, Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "./ui/checkbox";
 
 const CSearchBar = () => {
   const ref = useRef<HTMLInputElement | null>(null);
+  const [
+    showArticlesWithExactMatchesFilter,
+    setShowArticlesWithExactMatchesFilter,
+  ] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    ref.current?.focus();
-  }, []);
+  const handleChange = () => {
+    setShowArticlesWithExactMatchesFilter(!showArticlesWithExactMatchesFilter);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,8 +26,16 @@ const CSearchBar = () => {
       return;
     }
 
-    router.push(`/search?q=${ref.current.value}`);
+    router.push(
+      `/search?q=${ref.current.value}&exact=${
+        showArticlesWithExactMatchesFilter ? "1" : "0"
+      }`
+    );
   };
+
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
 
   return (
     <div className="flex flex-col gap-2 w-full sm:w-4/5 lg:w-3/5">
@@ -35,7 +48,7 @@ const CSearchBar = () => {
           type="text"
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
-          maxLength={100}
+          maxLength={200}
         />
         <Button
           type="submit"
@@ -45,14 +58,20 @@ const CSearchBar = () => {
           <span className="hidden sm:block mt-1">Search</span>
         </Button>
       </form>
-      <div className="flex items-baseline w-full gap-2 text-foreground/75">
-        <Info height={14} width={14} className="min-w-fit m-auto mt-1.5" />
-        <div className="text-sm/loose text-justify">
-          {`For optimal results, enter the precise topic you're searching for. For
-          instance, if you're looking for scholarly articles on Large Language
-          Models, enter "Large Language Models" instead of abbreviations like
-          "LLMs."`}
-        </div>
+      <div className="flex items-start gap-2">
+        <Checkbox
+          id="filter"
+          className="mt-1"
+          checked={showArticlesWithExactMatchesFilter}
+          onCheckedChange={handleChange}
+        />
+        <label
+          htmlFor="filter"
+          className="text-sm/loose peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none cursor-pointer"
+        >
+          Show only articles with exact query matches (Only articles which
+          contain the exact query in their title or abstract will be shown)
+        </label>
       </div>
     </div>
   );
