@@ -19,10 +19,9 @@ export interface ISearchResultsData {
 export async function POST(request: Request): Promise<Response> {
   let apiResponse: IApiResponse<ISearchResultsData[]>;
   const nResults = 10;
-  const maxQueryLength = 200;
   const jsonRequest = await request.json();
 
-  const query = jsonRequest.query.trim().substring(0, maxQueryLength + 1);
+  const query = jsonRequest.query;
   const exact = jsonRequest.exact === "1";
 
   // If the query is empty, return a 400.

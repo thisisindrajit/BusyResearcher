@@ -49,15 +49,13 @@ const Search = () => {
     isError,
     error,
   } = useQuery<IApiResponse<ISearchResultsData[]>>({
-    queryKey: ["search", query || ""],
+    queryKey: ["search", query?.toLowerCase() || "", exact ? exact : "0"],
     queryFn: ({ queryKey }) => getSearchResults(queryKey[1] as string),
     retry: 3, // Retry 3 times before failing
   });
 
   if (isPending) {
-    return (
-      <LoadingHolder text={`Semantically searching 🤔 for "${query}"`} />
-    );
+    return <LoadingHolder text={`Semantically searching 🤔 for "${query}"`} />;
   }
 
   if (isError) {

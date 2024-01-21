@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "./ui/checkbox";
 
 const CSearchBar = () => {
+  const maxQueryLength = 200;
   const ref = useRef<HTMLInputElement | null>(null);
   const [
     showArticlesWithExactMatchesFilter,
@@ -27,7 +28,9 @@ const CSearchBar = () => {
     }
 
     router.push(
-      `/search?q=${ref.current.value}&exact=${
+      `/search?q=${ref.current.value
+        .trim()
+        .substring(0, maxQueryLength + 1)}&exact=${
         showArticlesWithExactMatchesFilter ? "1" : "0"
       }`
     );
@@ -48,7 +51,7 @@ const CSearchBar = () => {
           type="text"
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
-          maxLength={200}
+          maxLength={maxQueryLength}
         />
         <Button
           type="submit"
