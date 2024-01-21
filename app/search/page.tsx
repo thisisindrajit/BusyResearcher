@@ -88,7 +88,7 @@ const Search = () => {
                     href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${d.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-2xl text-primary font-bold hover:underline w-fit"
+                    className="text-2xl/relaxed text-primary font-bold hover:underline w-fit"
                   >
                     <Latex>{d.title}</Latex>
                   </a>
