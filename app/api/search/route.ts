@@ -1,11 +1,12 @@
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import { ChromaClient, DefaultEmbeddingFunction } from "chromadb";
 import conn from "@/lib/db";
+import { sanitize } from "@/lib/utils";
 
 // Revalidate is set to 0 because the data is changing constantly and so it must be fetched on every request.
 export const revalidate = 0;
 
-export interface ISearchResultsData {
+export interface IScholarlyArticle {
   id: string;
   title: string;
   abstract: string;
@@ -17,7 +18,7 @@ export interface ISearchResultsData {
 }
 
 export async function POST(request: Request): Promise<Response> {
-  let apiResponse: IApiResponse<ISearchResultsData[]>;
+  let apiResponse: IApiResponse<IScholarlyArticle[]>;
   const nResults = 10;
   const jsonRequest = await request.json();
 
@@ -158,7 +159,13 @@ export async function POST(request: Request): Promise<Response> {
 
     const res = await conn?.query(sqlQuery, results);
 
-    const resData: ISearchResultsData[] | undefined = res?.rows;
+    const resData: IScholarlyArticle[] | undefined = res?.rows;
+
+    resData?.forEach((article) => {
+      article.title = sanitize(article.title);
+      article.abstract = sanitize(article.abstract);
+      article.comment = sanitize(article.comment || "");
+    });
 
     apiResponse = {
       success: true,

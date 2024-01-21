@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import 'katex/dist/katex.min.css';
+import "katex/dist/katex.min.css";
 import CThemeProvider from "@/components/CThemeProvider";
 import CQueryClientProvider from "@/components/CQueryClientProvider";
 
@@ -51,7 +51,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <div className="flex flex-col gap-16 m-auto p-4 lg:p-6 min-h-[100dvh] xl:max-w-[1440px] 2xl:max-w-[1920px]">{children}</div>
           </CThemeProvider>
         </CQueryClientProvider>
       </body>

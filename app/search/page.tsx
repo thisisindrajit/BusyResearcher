@@ -2,15 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { ISearchResultsData } from "../api/search/route";
+import { IScholarlyArticle } from "../api/search/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import LoadingHolder from "@/components/holder/LoadingHolder";
 import { Separator } from "@/components/ui/separator";
 import TopBar from "@/components/TopBar";
-import Latex from "react-latex-next";
-import { convertToPrettyDateFormat, sanitize } from "@/lib/utils";
-import { CalendarDays } from "lucide-react";
-import Link from "next/link";
+import ScholarlyArticleCard from "@/components/ScholarlyArticleCard";
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -19,7 +16,7 @@ const Search = () => {
 
   const getSearchResults = async (
     query: string
-  ): Promise<IApiResponse<ISearchResultsData[]>> => {
+  ): Promise<IApiResponse<IScholarlyArticle[]>> => {
     // We need to provide the full URL here because this function is called in the server
     const apiResponse = await fetch(`api/search`, {
       method: "POST",
@@ -29,7 +26,7 @@ const Search = () => {
       body: JSON.stringify({ query, exact }),
     });
 
-    const jsonResponse: IApiResponse<ISearchResultsData[]> =
+    const jsonResponse: IApiResponse<IScholarlyArticle[]> =
       await apiResponse.json();
 
     if (!jsonResponse.success) {
@@ -48,7 +45,7 @@ const Search = () => {
     data: searchResults,
     isError,
     error,
-  } = useQuery<IApiResponse<ISearchResultsData[]>>({
+  } = useQuery<IApiResponse<IScholarlyArticle[]>>({
     queryKey: ["search", query?.toLowerCase() || "", exact ? exact : "0"],
     queryFn: ({ queryKey }) => getSearchResults(queryKey[1] as string),
     retry: 3, // Retry 3 times before failing
@@ -77,70 +74,9 @@ const Search = () => {
               No results found!
             </div>
           )}
-          {searchResults.data.map((d) => {
+          {searchResults.data.map((d: IScholarlyArticle) => {
             return (
-              <div
-                className="flex flex-col gap-4 border border-foreground/30 dark:border-foreground/25 rounded-md p-6 backdrop-blur-md bg-light-foreground/5"
-                key={d.id}
-              >
-                <div className="flex flex-col gap-2">
-                  <a
-                    href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${d.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-2xl/relaxed text-primary font-bold hover:underline w-fit"
-                  >
-                    <Latex>{d.title}</Latex>
-                  </a>
-                  {d.authors.length > 0 && (
-                    <div className="leading-loose">
-                      {d.authors.slice(0, 50).map((a, index) => {
-                        return (
-                          <span key={index} className="font-bold">
-                            {a}
-                            {index !== d.authors.slice(0, 50).length - 1 &&
-                              ", "}
-                          </span>
-                        );
-                      })}
-                      {d.authors.length > 50 && (
-                        <span className="font-bold">
-                          {` + ${d.authors.length - 50} authors`}...
-                        </span>
-                      )}
-                    </div>
-                  )}
-                  {d.published && (
-                    <div className="text-xs flex gap-2 items-center w-fit font-bold text-secondary">
-                      <CalendarDays
-                        height={14}
-                        width={14}
-                        className="min-w-fit mb-[3.5px]"
-                      />
-                      {convertToPrettyDateFormat(d.published)}
-                    </div>
-                  )}
-                </div>
-                <div className="text-justify leading-loose text-foreground/80 dark:text-foreground/70 line-clamp-[8] md:line-clamp-6">
-                  <Latex>{sanitize(d.abstract)}</Latex>
-                </div>
-                {d.categories.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {d.categories.map((c, index) => {
-                      return (
-                        <Link
-                          href={`/category/${d.category_ids[index]}`}
-                          target="_blank"
-                          key={index}
-                          className="text-primary text-xs border border-primary font-bold rounded-lg p-2"
-                        >
-                          {c} ({d.category_ids[index]})
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+              <ScholarlyArticleCard key={d.id} data={d} />
             );
           })}
         </div>

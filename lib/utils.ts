@@ -19,16 +19,17 @@ export function abbreviateNumber(number?: number): string {
 
 export function sanitize(input: string) {
   const map: { [x: string]: string } = {
-    "&": "&amp;",
+    // "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#x27;",
-    "/": "&#x2F;",
-    "`": "&grave;",
+    // '"': "&quot;",
+    // "'": "&#x27;",
+    // "/": "&#x2F;",
+    // "`": "&grave;",
   };
 
-  const reg = /[&<>"'/]/gi;
+  // const reg = /[&<>"'/`]/gi;
+  const reg = /[<>]/gi;
   return input.replace(reg, (match) => map[match]);
 }
 
