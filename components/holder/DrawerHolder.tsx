@@ -19,7 +19,7 @@ const DrawerHolder: FC<IDrawerHolderProps> = ({
   children,
 }) => {
   return (
-    <Drawer.Root>
+    <Drawer.Root dismissible={false}>
       <Drawer.Trigger asChild>{drawerTrigger}</Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-background/75" />
