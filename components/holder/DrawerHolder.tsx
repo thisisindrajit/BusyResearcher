@@ -26,7 +26,7 @@ const DrawerHolder: FC<IDrawerHolderProps> = ({
         <Drawer.Content className="h-[85%] fixed bottom-0 left-0 right-0">
           <div className="bg-background overflow-auto h-full rounded-t-md border-t border-x border-primary flex-1">
             {/* Container */}
-            <div className="p-6 sm:py-8 sm:px-4 sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col min-h-full gap-4">
+            <div className="px-6 pt-6 sm:py-8 sm:px-4 sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col min-h-full gap-4">
               <Drawer.Title className="flex items-start justify-between gap-8 font-bold text-xl/relaxed text-primary">
                 <a
                   href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${id}`}
