@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { IScholarlyArticle } from "../api/search/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import LoadingHolder from "@/components/holder/LoadingHolder";
-import { Separator } from "@/components/ui/separator";
+// import { Separator } from "@/components/ui/separator";
 import TopBar from "@/components/TopBar";
 import ScholarlyArticleCard from "@/components/ScholarlyArticleCard";
 
@@ -52,7 +52,12 @@ const Search = () => {
   });
 
   if (isPending) {
-    return <LoadingHolder text={`Semantically searching 🤔 for "${query}"`} />;
+    return (
+      <LoadingHolder>
+        Semantically searching 🤔 for{" "}
+        <span className="text-primary font-bold">{query}</span>
+      </LoadingHolder>
+    );
   }
 
   if (isError) {

@@ -4,10 +4,12 @@ import { CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { FC } from "react";
 import Latex from "react-latex-next";
-import CDrawerHolder from "./holder/CDrawerHolder";
+import DrawerHolder from "./holder/DrawerHolder";
 import { Button } from "./ui/button";
 
 const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
+  const maxNoOfAuthorsThatCanBeShown = 20;
+
   const renderAbstract = () => {
     const fullAbstract = data.abstract;
 
@@ -19,7 +21,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
       return (
         <div>
           <Latex>{`${splittedAbstract}... `}</Latex>
-          <CDrawerHolder
+          <DrawerHolder
             drawerTrigger={
               <Button
                 variant="ghost"
@@ -32,7 +34,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
             title={data.title}
           >
             <Latex>{fullAbstract}</Latex>
-          </CDrawerHolder>
+          </DrawerHolder>
         </div>
       );
     } else {
@@ -56,17 +58,26 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
         </a>
         {data.authors.length > 0 && (
           <div className="leading-loose">
-            {data.authors.slice(0, 50).map((a, index) => {
-              return (
-                <span key={index} className="font-bold">
-                  {a}
-                  {index !== data.authors.slice(0, 50).length - 1 && ", "}
-                </span>
-              );
-            })}
-            {data.authors.length > 50 && (
+            {data.authors
+              .slice(0, maxNoOfAuthorsThatCanBeShown)
+              .map((a, index) => {
+                return (
+                  <span key={index} className="font-bold">
+                    {a}
+                    {index !==
+                      data.authors.slice(0, maxNoOfAuthorsThatCanBeShown)
+                        .length -
+                        1 && ", "}
+                  </span>
+                );
+              })}
+            {data.authors.length > maxNoOfAuthorsThatCanBeShown && (
               <span className="font-bold">
-                {` and ${data.authors.length - 50} authors`}...
+                {` and ${data.authors.length - maxNoOfAuthorsThatCanBeShown} ${
+                  data.authors.length - maxNoOfAuthorsThatCanBeShown > 1
+                    ? "authors"
+                    : "author"
+                } `}
               </span>
             )}
           </div>
