@@ -9,9 +9,21 @@ export function abbreviateNumber(number?: number): string {
   if (!number) {
     return " a plethora of";
   } else if (number >= 1000000) {
-    return (number / 1000000).toFixed(2) + " million+";
+    const noOfMillions = Math.floor(number / 1000000);
+
+    if (number - noOfMillions * 1000000 >= 100000) {
+      return (number / 1000000).toFixed(1) + "M+";
+    }
+
+    return (number / 1000000).toFixed(0) + "M+";
   } else if (number >= 1000) {
-    return (number / 1000).toFixed(2) + " thousand+";
+    const noOfThousands = Math.floor(number / 1000);
+
+    if (number - noOfThousands * 1000 >= 100) {
+      return (number / 1000).toFixed(1) + "K+";
+    }
+
+    return (number / 1000).toFixed(0) + "K+";
   }
 
   return number.toString();

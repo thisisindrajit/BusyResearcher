@@ -13,10 +13,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
 
     if (!fullAbstract) return "No abstract available.";
 
-    const splittedAbstract = fullAbstract
-      .split(" ")
-      .slice(0, 50)
-      .join(" ");
+    const splittedAbstract = fullAbstract.split(" ").slice(0, 50).join(" ");
 
     if (splittedAbstract.length < fullAbstract.length) {
       return (
@@ -26,7 +23,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
             drawerTrigger={
               <Button
                 variant="ghost"
-                className="p-0 bg-transparent inline font-bold text-base text-secondary underline cursor-pointer"
+                className="p-0 bg-transparent inline font-bold text-base text-secondary underline cursor-pointer h-fit w-fit"
               >
                 Show more
               </Button>
@@ -47,12 +44,13 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
       className="flex flex-col gap-4 border border-foreground/30 dark:border-foreground/25 rounded-md p-4 md:p-6 backdrop-blur-md bg-light-foreground/5"
       key={data.id}
     >
+      {/* Title, authors and published */}
       <div className="flex flex-col gap-2">
         <a
           href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${data.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-2xl/relaxed text-primary font-bold hover:underline w-fit"
+          className="text-2xl/relaxed text-primary font-bold underline w-fit"
         >
           <Latex>{data.title}</Latex>
         </a>
@@ -68,7 +66,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
             })}
             {data.authors.length > 50 && (
               <span className="font-bold">
-                {` + ${data.authors.length - 50} authors`}...
+                {` and ${data.authors.length - 50} authors`}...
               </span>
             )}
           </div>
@@ -95,7 +93,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
                 href={`/category/${data.category_ids[index]}`}
                 target="_blank"
                 key={index}
-                className="text-primary text-xs border border-primary font-bold rounded-lg p-2"
+                className="text-secondary text-xs border border-secondary font-bold rounded-lg p-2 hover:bg-secondary/10 transition-all"
               >
                 {c} ({data.category_ids[index]})
               </Link>

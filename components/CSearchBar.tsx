@@ -36,9 +36,10 @@ const CSearchBar = () => {
     );
   };
 
-  useEffect(() => {
-    ref.current?.focus();
-  }, []);
+  // NOTE: Focus on the search bar on page load
+  // useEffect(() => {
+  //   ref.current?.focus();
+  // }, []);
 
   return (
     <div className="flex flex-col gap-2 w-full sm:w-4/5 lg:w-3/5">

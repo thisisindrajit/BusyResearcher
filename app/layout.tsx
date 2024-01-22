@@ -51,7 +51,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col gap-16 m-auto p-4 lg:p-6 min-h-[100dvh] xl:max-w-[1440px] 2xl:max-w-[1920px]">{children}</div>
+            <div className="flex flex-col gap-14 m-auto p-4 lg:p-6 min-h-[100dvh] xl:max-w-[1440px] 2xl:max-w-[1920px]">{children}</div>
           </CThemeProvider>
         </CQueryClientProvider>
       </body>

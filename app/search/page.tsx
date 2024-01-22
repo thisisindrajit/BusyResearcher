@@ -62,12 +62,12 @@ const Search = () => {
   return (
     <>
       <TopBar />
-      <div>
+      <div className="flex flex-col gap-4">
         <div className="text-2xl/relaxed">
           Search results for{" "}
           <span className="text-primary font-bold">{query}</span>
         </div>
-        <Separator className="my-4 bg-primary" />
+        {/* <Separator className="my-4 bg-primary" /> */}
         <div className="flex flex-col gap-4">
           {searchResults.data.length === 0 && (
             <div className="my-4 text-center text-destructive m-auto font-bold">
@@ -75,9 +75,7 @@ const Search = () => {
             </div>
           )}
           {searchResults.data.map((d: IScholarlyArticle) => {
-            return (
-              <ScholarlyArticleCard key={d.id} data={d} />
-            );
+            return <ScholarlyArticleCard key={d.id} data={d} />;
           })}
         </div>
       </div>

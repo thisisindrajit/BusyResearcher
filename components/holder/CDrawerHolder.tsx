@@ -24,21 +24,22 @@ const CDrawerHolder: FC<ICDrawerHolderProps> = ({
     <Drawer.Root dismissible={false}>
       <Drawer.Trigger asChild>{drawerTrigger}</Drawer.Trigger>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-black/50" />
+        <Drawer.Overlay className="fixed inset-0 bg-background/75" />
         <Drawer.Content className="h-[85%] fixed bottom-0 left-0 right-0">
-          <div className="py-8 px-4 bg-background overflow-auto h-full rounded-t-md border-t border-x border-secondary flex-1">
-            <div className="sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col gap-4">
-              <Drawer.Title className="flex items-start justify-between gap-4 font-bold text-lg/relaxed md:text-2xl/relaxed text-primary">
+          <div className="bg-background overflow-auto h-full rounded-t-md border-t border-x border-primary flex-1">
+            {/* Container */}
+            <div className="p-6 sm:py-8 sm:px-4 sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col gap-4">
+              <Drawer.Title className="flex items-start justify-between gap-8 font-bold text-xl/relaxed text-primary">
                 <a
                   href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${id}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="line-clamp-6 md:line-clamp-3 hover:underline w-fit"
+                  className="underline w-fit"
                 >
                   <Latex>{title}</Latex>
                 </a>
-                <Drawer.Close tabIndex={-1}>
-                  <Button variant="destructive" size="icon" className="h-8 w-8">
+                <Drawer.Close tabIndex={-1} className="hidden sm:block">
+                  <Button variant="destructive" size="icon" className="h-7 w-7">
                     <X height={18} width={18} />
                   </Button>
                 </Drawer.Close>
@@ -46,6 +47,14 @@ const CDrawerHolder: FC<ICDrawerHolderProps> = ({
               <Separator className="bg-foreground/10" />
               <div className="text-justify leading-loose select-text">
                 {children}
+              </div>
+              {/* Bottom close button holder (for small screens) */}
+              <div className="block sm:hidden sticky bottom-0 w-full bg-background pb-6">
+                <Drawer.Close tabIndex={-1} className="w-full">
+                  <Button variant="destructive" className="w-full">
+                    Close
+                  </Button>
+                </Drawer.Close>
               </div>
             </div>
           </div>
