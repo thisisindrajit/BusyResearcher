@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "katex/dist/katex.min.css";
-import CThemeProvider from "@/components/CThemeProvider";
-import CQueryClientProvider from "@/components/CQueryClientProvider";
+import CThemeProvider from "@/components/providers/CThemeProvider";
+import CQueryClientProvider from "@/components/providers/CQueryClientProvider";
 
 export const metadata: Metadata = {
   title: "BusyResearcher",

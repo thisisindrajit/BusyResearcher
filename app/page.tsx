@@ -1,5 +1,5 @@
-import CSearchBar from "@/components/CSearchBar";
-import TopBar from "@/components/TopBar";
+import CSearchBar from "@/components/common/CSearchBar";
+import TopBar from "@/components/common/TopBar";
 import { Separator } from "@/components/ui/separator";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import { abbreviateNumber } from "@/lib/utils";

@@ -1,6 +1,6 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import CThemeToggle from "./CThemeToggle";
-import SvgLogo from "./SvgLogo";
+import SvgLogo from "../svg/SvgLogo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";

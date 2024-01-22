@@ -1,15 +1,15 @@
 import { IScholarlyArticle } from "@/app/api/search/route";
 import { convertToPrettyDateFormat } from "@/lib/utils";
 import { CalendarDays } from "lucide-react";
-import Link from "next/link";
 import { FC } from "react";
 import Latex from "react-latex-next";
-import DrawerHolder from "./holder/DrawerHolder";
-import { Button } from "./ui/button";
+import DrawerHolder from "./AbstractDrawer";
+import { Button } from "../ui/button";
+import Authors from "./Authors";
+import Categories from "./Categories";
 
 const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
-  const maxNoOfAuthorsThatCanBeShown = 20;
-
+  // Function to render the abstract
   const renderAbstract = () => {
     const fullAbstract = data.abstract;
 
@@ -32,9 +32,11 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
             }
             id={data.id}
             title={data.title}
-          >
-            <Latex>{fullAbstract}</Latex>
-          </DrawerHolder>
+            authors={data.authors}
+            abstract={fullAbstract}
+            categories={data.categories}
+            category_ids={data.category_ids}
+          />
         </div>
       );
     } else {
@@ -56,32 +58,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
         >
           <Latex>{data.title}</Latex>
         </a>
-        {data.authors.length > 0 && (
-          <div className="leading-loose">
-            {data.authors
-              .slice(0, maxNoOfAuthorsThatCanBeShown)
-              .map((a, index) => {
-                return (
-                  <span key={index} className="font-bold">
-                    {a}
-                    {index !==
-                      data.authors.slice(0, maxNoOfAuthorsThatCanBeShown)
-                        .length -
-                        1 && ", "}
-                  </span>
-                );
-              })}
-            {data.authors.length > maxNoOfAuthorsThatCanBeShown && (
-              <span className="font-bold">
-                {` and ${data.authors.length - maxNoOfAuthorsThatCanBeShown} ${
-                  data.authors.length - maxNoOfAuthorsThatCanBeShown > 1
-                    ? "authors"
-                    : "author"
-                } `}
-              </span>
-            )}
-          </div>
-        )}
+        <Authors authors={data.authors} />
         {data.published && (
           <div className="text-xs flex gap-2 items-center w-fit font-bold text-secondary">
             <CalendarDays
@@ -89,29 +66,19 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
               width={14}
               className="min-w-fit mb-[3.5px]"
             />
-            {convertToPrettyDateFormat(data.published)}
+            <span>{convertToPrettyDateFormat(data.published)}</span>
           </div>
         )}
       </div>
+      {/* Abstract */}
       <div className="text-justify leading-loose text-foreground/80 dark:text-foreground/70">
         {renderAbstract()}
       </div>
-      {data.categories.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {data.categories.map((c, index) => {
-            return (
-              <Link
-                href={`/category/${data.category_ids[index]}`}
-                target="_blank"
-                key={index}
-                className="text-secondary text-xs border border-secondary font-bold rounded-lg p-2 hover:bg-secondary/10 transition-all"
-              >
-                {c} ({data.category_ids[index]})
-              </Link>
-            );
-          })}
-        </div>
-      )}
+      {/* Categories */}
+      <Categories
+        categories={data.categories}
+        category_ids={data.category_ids}
+      />
     </div>
   );
 };

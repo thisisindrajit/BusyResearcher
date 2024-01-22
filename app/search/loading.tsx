@@ -1,4 +1,4 @@
-import LoadingHolder from "@/components/holder/LoadingHolder";
+import LoadingHolder from "@/components/holders/LoadingHolder";
 
 const SearchLoading = () => {
   return <LoadingHolder>Loading search page...</LoadingHolder>;

@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import SvgLoading from "../SvgLoading";
+import SvgLoading from "../svg/SvgLoading";
 import { Separator } from "../ui/separator";
 
 interface ILoadingHolderProps {

@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { IScholarlyArticle } from "../api/search/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
-import LoadingHolder from "@/components/holder/LoadingHolder";
+import LoadingHolder from "@/components/holders/LoadingHolder";
 // import { Separator } from "@/components/ui/separator";
-import TopBar from "@/components/TopBar";
-import ScholarlyArticleCard from "@/components/ScholarlyArticleCard";
+import TopBar from "@/components/common/TopBar";
+import ScholarlyArticleCard from "@/components/scholarly-article-card/ScholarlyArticleCard";
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -68,9 +68,17 @@ const Search = () => {
     <>
       <TopBar />
       <div className="flex flex-col gap-4">
-        <div className="text-2xl/relaxed">
-          Search results for{" "}
-          <span className="text-primary font-bold">{query}</span>
+        <div className="flex flex-col gap-1 mb-2">
+          <div className="text-2xl/relaxed">
+            Search results for{" "}
+            <span className="text-primary font-bold">{query}</span>
+          </div>
+          {searchResults.data.length > 0 && (
+            <div className="font-bold text-sm text-secondary">
+              Showing {searchResults.data.length}{" "}
+              {searchResults.data.length > 1 ? "results" : "result"}
+            </div>
+          )}
         </div>
         {/* <Separator className="my-4 bg-primary" /> */}
         <div className="flex flex-col gap-4">
