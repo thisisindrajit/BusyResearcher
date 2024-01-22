@@ -26,7 +26,7 @@ const DrawerHolder: FC<IDrawerHolderProps> = ({
         <Drawer.Content className="h-[85%] fixed bottom-0 left-0 right-0">
           <div className="bg-background overflow-auto h-full rounded-t-md border-t border-x border-primary flex-1">
             {/* Container */}
-            <div className="p-6 sm:py-8 sm:px-4 sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col gap-4">
+            <div className="p-6 sm:py-8 sm:px-4 sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col min-h-full gap-4">
               <Drawer.Title className="flex items-start justify-between gap-8 font-bold text-xl/relaxed text-primary">
                 <a
                   href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${id}`}
@@ -37,7 +37,7 @@ const DrawerHolder: FC<IDrawerHolderProps> = ({
                   <Latex>{title}</Latex>
                 </a>
                 <Drawer.Close tabIndex={-1} className="hidden sm:block">
-                  <Button variant="destructive" size="icon" className="h-7 w-7">
+                  <Button variant="destructive" size="icon" className="h-8 w-8">
                     <X height={18} width={18} />
                   </Button>
                 </Drawer.Close>
@@ -47,7 +47,7 @@ const DrawerHolder: FC<IDrawerHolderProps> = ({
                 {children}
               </div>
               {/* Bottom close button holder (for small screens) */}
-              <div className="block sm:hidden sticky bottom-0 w-full bg-background pb-6">
+              <div className="m-auto mb-0 block sm:hidden sticky bottom-0 w-full bg-background pb-6">
                 <Drawer.Close tabIndex={-1} className="w-full">
                   <Button variant="destructive" className="w-full">
                     Close
