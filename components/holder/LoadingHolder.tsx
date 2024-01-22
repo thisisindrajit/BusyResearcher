@@ -11,7 +11,7 @@ const LoadingHolder: FC<ILoadingHolderProps> = ({ children }) => {
     <div className="flex flex-col items-center justify-center gap-2 w-fit m-auto px-6">
       <SvgLoading />
       <Separator className="my-4 bg-foreground/10" />
-      <div>{children}</div>
+      <div className="text-center leading-relaxed">{children}</div>
     </div>
   );
 };

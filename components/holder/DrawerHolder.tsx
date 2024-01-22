@@ -24,7 +24,7 @@ const DrawerHolder: FC<IDrawerHolderProps> = ({
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-background/75" />
         <Drawer.Content className="h-[85%] fixed bottom-0 left-0 right-0">
-          <div className="bg-background overflow-auto h-full rounded-t-md border-t border-x border-primary flex-1 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary/20">
+          <div className="bg-background overflow-auto h-full rounded-t-md border-t border-x border-primary flex-1">
             {/* Container */}
             <div className="p-6 sm:py-8 sm:px-4 sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col gap-4">
               <Drawer.Title className="flex items-start justify-between gap-8 font-bold text-xl/relaxed text-primary">
