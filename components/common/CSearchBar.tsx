@@ -51,11 +51,6 @@ const CSearchBar: FC<CSearchBarProps> = ({
     );
   };
 
-  // NOTE: Focus on the search bar on page load
-  // useEffect(() => {
-  //   ref.current?.focus();
-  // }, []);
-
   useEffect(() => {
     // If query changes, update the search bar value and blur focus
     setQueryText(query || "");
@@ -84,7 +79,6 @@ const CSearchBar: FC<CSearchBarProps> = ({
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
           maxLength={maxQueryTextLength}
-          autoFocus={false}
           value={queryText}
           onChange={(e) => setQueryText(e.target.value)}
         />

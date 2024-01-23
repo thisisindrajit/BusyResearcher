@@ -87,6 +87,7 @@ const Search = () => {
             <div className="font-bold text-sm text-secondary">
               Showing {searchResults.data.length}{" "}
               {searchResults.data.length > 1 ? "results" : "result"}
+              {exact && " (Exact query matches only)"}
             </div>
           )}
         </div>
