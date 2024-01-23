@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     /* Copyright banner */
-    <div className="w-full flex items-center justify-between text-sm font-bold">
+    <div className="w-full flex items-center justify-end md:justify-between text-sm font-bold">
       <div className="hidden md:block">
         Created with ❤️ by{" "}
         <a
@@ -13,7 +13,7 @@ const Footer = () => {
           Indrajit
         </a>
       </div>
-      <div>
+      <div className="self-end">
         Copyright © {new Date().getFullYear()}, BusyResearcher
       </div>
     </div>

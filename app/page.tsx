@@ -58,7 +58,7 @@ const Home = async () => {
           What is{" "}
           <span className="font-bold text-primary">BusyResearcher?</span>
         </div>
-        <Separator className="bg-gradient-to-r from-primary to-background" />
+        <Separator className="bg-gradient-to-r from-foreground to-background" />
         <div className="flex flex-col gap-8 text-justify leading-loose text-lg">
           <p>
             BusyResearcher is an innovative platform aiming to{" "}
