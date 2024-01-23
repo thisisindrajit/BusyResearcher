@@ -58,8 +58,11 @@ const CSearchBar: FC<CSearchBarProps> = ({
 
   useEffect(() => {
     // setQueryText(query || "");
+
+    // If query changes, update the search bar value and blur focus
     if (ref && ref.current) {
       ref.current.value = query || "";
+      ref.current.blur();
     }
 
     setShowArticlesWithExactMatchesFilter(exact || false);
@@ -83,6 +86,7 @@ const CSearchBar: FC<CSearchBarProps> = ({
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
           maxLength={maxQueryTextLength}
+          autoFocus={false}
           // value={queryText}
           // onChange={(e) => setQueryText(e.target.value)}
         />
