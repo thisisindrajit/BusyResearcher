@@ -21,8 +21,8 @@ const CSearchBar: FC<CSearchBarProps> = ({
   fullWidth = false,
 }) => {
   const maxQueryTextLength = 200;
-  // const [queryText, setQueryText] = useState<string>(query || "");
   const ref = useRef<HTMLInputElement>(null);
+  const [queryText, setQueryText] = useState<string>(query || "");
   const [
     showArticlesWithExactMatchesFilter,
     setShowArticlesWithExactMatchesFilter,
@@ -37,7 +37,7 @@ const CSearchBar: FC<CSearchBarProps> = ({
     e.preventDefault();
 
     const formattedQueryText =
-      ref.current?.value.trim().substring(0, maxQueryTextLength + 1) || "";
+      queryText.trim().substring(0, maxQueryTextLength + 1) || "";
 
     if (formattedQueryText.length === 0) {
       // alert("Please enter a search query!");
@@ -57,11 +57,9 @@ const CSearchBar: FC<CSearchBarProps> = ({
   // }, []);
 
   useEffect(() => {
-    // setQueryText(query || "");
-
     // If query changes, update the search bar value and blur focus
+    setQueryText(query || "");
     if (ref && ref.current) {
-      ref.current.value = query || "";
       ref.current.blur();
     }
 
@@ -87,8 +85,8 @@ const CSearchBar: FC<CSearchBarProps> = ({
           className="p-2 bg-background outline-none flex-grow"
           maxLength={maxQueryTextLength}
           autoFocus={false}
-          // value={queryText}
-          // onChange={(e) => setQueryText(e.target.value)}
+          value={queryText}
+          onChange={(e) => setQueryText(e.target.value)}
         />
         <Button
           type="submit"
