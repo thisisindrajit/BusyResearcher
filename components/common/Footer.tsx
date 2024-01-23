@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     /* Copyright banner */
-    <div className="w-full flex items-center justify-end md:justify-between text-sm font-bold">
+    <div className="w-full flex items-center justify-end md:justify-between text-sm font-bold m-auto mb-0">
       <div className="hidden md:block">
         Created with ❤️ by{" "}
         <a

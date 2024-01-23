@@ -15,7 +15,6 @@ async function getTotalCountFromApi(): Promise<IApiResponse<ITotalCountData>> {
   const jsonResponse: IApiResponse<ITotalCountData> = await apiResponse.json();
 
   if (!jsonResponse.success) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error(
       jsonResponse.message || "Some error occurred while fetching total count!"
     );

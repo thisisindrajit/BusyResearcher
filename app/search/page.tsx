@@ -14,13 +14,17 @@ import { Separator } from "@/components/ui/separator";
 
 const Search = () => {
   const searchParams = useSearchParams();
-  const query = searchParams.get("q");
-  const exact = searchParams.get("exact");
+  const query: string | undefined = searchParams.get("q")?.trim();
+  const exact: boolean = searchParams.get("exact") === "1";
 
   const getSearchResults = async (
     query: string
   ): Promise<IApiResponse<IScholarlyArticle[]>> => {
-    // We need to provide the full URL here because this function is called in the server
+    // If query is not available or is empty, throw an error
+    if(!query || query.length === 0) {
+      throw new Error("No search query provided!");
+    }
+    
     const apiResponse = await fetch(`api/search`, {
       method: "POST",
       headers: {
@@ -33,7 +37,6 @@ const Search = () => {
       await apiResponse.json();
 
     if (!jsonResponse.success) {
-      // This will activate the closest `error.js` Error Boundary
       throw new Error(
         jsonResponse.message ||
           "Some error occurred while fetching search results data!"
@@ -49,7 +52,8 @@ const Search = () => {
     isError,
     error,
   } = useQuery<IApiResponse<IScholarlyArticle[]>>({
-    queryKey: ["search", query?.toLowerCase() || "", exact ? exact : "0"],
+    // here query is made to lower case to avoid case sensitivity
+    queryKey: ["search", query?.toLowerCase(), exact],
     queryFn: ({ queryKey }) => getSearchResults(queryKey[1] as string),
     retry: 3, // Retry 3 times before failing
   });
@@ -58,7 +62,7 @@ const Search = () => {
     return (
       <LoadingHolder>
         Semantically searching 🤔 for{" "}
-        <span className="text-primary font-bold">{query}</span>
+        <span className="text-primary font-bold">{query || "🫤"}</span>
       </LoadingHolder>
     );
   }
@@ -72,8 +76,8 @@ const Search = () => {
       <TopBar />
       <div className="flex flex-col gap-4">
         <CSearchBar
-          query={query || undefined}
-          exact={exact === "1" ? true : false}
+          query={query}
+          exact={exact}
           fullWidth
         />
         <Separator className="bg-gradient-to-r from-background via-secondary to-background my-2" />
