@@ -1,18 +1,26 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { Info, Search } from "lucide-react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
+import { cn } from "@/lib/utils";
 
-const CSearchBar = () => {
+interface CSearchBarProps {
+  query?: string;
+  exact?: boolean;
+  className?: string;
+  fullWidth?: boolean;
+}
+
+const CSearchBar: FC<CSearchBarProps> = ({ query, exact, className, fullWidth = false }) => {
   const maxQueryLength = 200;
   const ref = useRef<HTMLInputElement | null>(null);
   const [
     showArticlesWithExactMatchesFilter,
     setShowArticlesWithExactMatchesFilter,
-  ] = useState<boolean>(false);
+  ] = useState<boolean>(exact || false);
   const router = useRouter();
 
   const handleChange = () => {
@@ -42,7 +50,13 @@ const CSearchBar = () => {
   // }, []);
 
   return (
-    <div className="flex flex-col gap-2 w-full sm:w-4/5 lg:w-3/5">
+    <div
+      className={cn(
+        "flex flex-col gap-2",
+        fullWidth ? "w-full" : "w-full sm:w-4/5 lg:w-3/5",
+        className
+      )}
+    >
       <form
         onSubmit={handleSubmit}
         className="border border-foreground flex items-center gap-1 p-1.5 rounded-[0.9rem] w-full"
@@ -53,13 +67,14 @@ const CSearchBar = () => {
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
           maxLength={maxQueryLength}
+          defaultValue={query || ""}
         />
         <Button
           type="submit"
           className="flex items-center justify-center gap-1.5 w-10 p-0 sm:w-fit sm:px-4 sm:py-2"
         >
           <Search height={14} width={14} />
-          <span className="hidden sm:block mt-1">Search</span>
+          <span className="hidden sm:block mt-[2px]">Search</span>
         </Button>
       </form>
       <div className="flex items-start gap-2">
@@ -73,8 +88,8 @@ const CSearchBar = () => {
           htmlFor="filter"
           className="text-sm/loose peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none cursor-pointer"
         >
-          Show articles with exact query matches (Only articles which
-          contain the exact query in their title or abstract will be shown)
+          Show articles with exact query matches (Only articles which contain
+          the exact query in their title or abstract will be shown)
         </label>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import { abbreviateNumber } from "@/lib/utils";
 import { ITotalCountData } from "./api/getTotalCount/route";
+import Footer from "@/components/common/Footer";
 
 async function getTotalCountFromApi(): Promise<IApiResponse<ITotalCountData>> {
   // We need to provide the full URL here because this function is called in the server
@@ -57,7 +58,7 @@ const Home = async () => {
           What is{" "}
           <span className="font-bold text-primary">BusyResearcher?</span>
         </div>
-        <Separator />
+        <Separator className="bg-gradient-to-r from-primary to-background" />
         <div className="flex flex-col gap-8 text-justify leading-loose text-lg">
           <p>
             BusyResearcher is an innovative platform aiming to{" "}
@@ -122,10 +123,7 @@ const Home = async () => {
           </div>
         </div>
       </div>
-      {/* Copyright banner */}
-      <div className="w-fit self-end font-bold text-sm">
-        Copyright © {new Date().getFullYear()}, BusyResearcher
-      </div>
+      <Footer />
     </>
   );
 };

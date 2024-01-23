@@ -8,6 +8,9 @@ import LoadingHolder from "@/components/holders/LoadingHolder";
 // import { Separator } from "@/components/ui/separator";
 import TopBar from "@/components/common/TopBar";
 import ScholarlyArticleCard from "@/components/scholarly-article-card/ScholarlyArticleCard";
+import Footer from "@/components/common/Footer";
+import CSearchBar from "@/components/common/CSearchBar";
+import { Separator } from "@/components/ui/separator";
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -68,6 +71,12 @@ const Search = () => {
     <>
       <TopBar />
       <div className="flex flex-col gap-4">
+        <CSearchBar
+          query={query || undefined}
+          exact={exact === "1" ? true : false}
+          fullWidth
+        />
+        <Separator className="bg-gradient-to-r from-background via-secondary to-background my-2" />
         <div className="flex flex-col gap-1 mb-2">
           <div className="text-2xl/relaxed">
             Search results for{" "}
@@ -92,6 +101,7 @@ const Search = () => {
           })}
         </div>
       </div>
+      <Footer />
     </>
   );
 };
