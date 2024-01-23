@@ -19,7 +19,7 @@ export interface IScholarlyArticle {
 
 export async function POST(request: Request): Promise<Response> {
   let apiResponse: IApiResponse<IScholarlyArticle[]>;
-  const nResults = 10;
+  const nResults = 5;
   const jsonRequest = await request.json();
 
   const query: string = jsonRequest.query;
@@ -68,11 +68,9 @@ export async function POST(request: Request): Promise<Response> {
       };
     }
 
-    const resultsWithoutWhereDocumentFilter = await collection.query(
+    results = (await collection.query(
       queryOptions
-    );
-
-    results = resultsWithoutWhereDocumentFilter.ids[0];
+    )).ids[0];
 
     // NOTE: COMMENTED OUT THIS CODE BECAUSE IT TAKES MORE THAN 10 SECONDS TO EXECUTE AND IS GREATER THAN THE LIMIT OF VERCEL FREE TIER.
 

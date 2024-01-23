@@ -40,50 +40,52 @@ const AbstractDrawer: FC<IAbstractDrawerProps> = ({
             {/* Content and bottom close button (for small screens) holder */}
             <div className="flex flex-col h-full">
               {/* Content holder */}
-              <div className="overflow-auto scroll-shadows p-4 sm:py-8 sm:px-4 sm:max-w-[90%] md:max-w-[80%] mx-auto flex flex-col gap-4">
-                {/* Title, authors, published and close button (for large screens and authors) */}
-                <Drawer.Title className="flex items-start justify-between gap-8">
-                  <div className="flex flex-col gap-2">
-                    <a
-                      href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline w-fit font-bold text-xl/relaxed text-primary"
-                    >
-                      <Latex>{title}</Latex>
-                    </a>
-                    <Authors authors={authors} />
-                    {published && (
-                      <div className="text-xs flex gap-2 items-center w-fit font-bold text-secondary">
-                        <CalendarDays
-                          height={14}
-                          width={14}
-                          className="min-w-fit mb-[3.5px]"
-                        />
-                        <span>{convertToPrettyDateFormat(published)}</span>
-                      </div>
-                    )}
+              <div className="overflow-auto scroll-shadows p-4 sm:py-8 sm:px-4">
+                <div className="flex flex-col gap-4 mx-auto sm:max-w-[90%] md:max-w-[80%]">
+                  {/* Title, authors, published and close button (for large screens and authors) */}
+                  <Drawer.Title className="flex items-start justify-between gap-8">
+                    <div className="flex flex-col gap-2">
+                      <a
+                        href={`${process.env.NEXT_PUBLIC_ARXIV_BASE_URL}/${id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline w-fit font-bold text-xl/relaxed text-primary"
+                      >
+                        <Latex>{title}</Latex>
+                      </a>
+                      <Authors authors={authors} />
+                      {published && (
+                        <div className="text-xs flex gap-2 items-center w-fit font-bold text-secondary">
+                          <CalendarDays
+                            height={14}
+                            width={14}
+                            className="min-w-fit mb-[3.5px]"
+                          />
+                          <span>{convertToPrettyDateFormat(published)}</span>
+                        </div>
+                      )}
+                    </div>
+                    <Drawer.Close tabIndex={-1} className="hidden sm:block">
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        className="h-8 w-8"
+                      >
+                        <X height={18} width={18} />
+                      </Button>
+                    </Drawer.Close>
+                  </Drawer.Title>
+                  <Separator className="bg-foreground/10" />
+                  {/* Abstract */}
+                  <div className="text-justify leading-loose select-text">
+                    <Latex>{abstract}</Latex>
                   </div>
-                  <Drawer.Close tabIndex={-1} className="hidden sm:block">
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="h-8 w-8"
-                    >
-                      <X height={18} width={18} />
-                    </Button>
-                  </Drawer.Close>
-                </Drawer.Title>
-                <Separator className="bg-foreground/10" />
-                {/* Abstract */}
-                <div className="text-justify leading-loose select-text">
-                  <Latex>{abstract}</Latex>
+                  {/* Categories */}
+                  <Categories
+                    categories={categories}
+                    category_ids={category_ids}
+                  />
                 </div>
-                {/* Categories */}
-                <Categories
-                  categories={categories}
-                  category_ids={category_ids}
-                />
               </div>
               {/* Bottom close button holder (for small screens) */}
               <div className="m-auto mb-0 block sm:hidden sticky bottom-0 w-full bg-background p-4">

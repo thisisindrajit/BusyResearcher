@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { IScholarlyArticle } from "../api/search/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import LoadingHolder from "@/components/holders/LoadingHolder";
@@ -11,9 +11,11 @@ import ScholarlyArticleCard from "@/components/scholarly-article-card/ScholarlyA
 import Footer from "@/components/common/Footer";
 import CSearchBar from "@/components/common/CSearchBar";
 import { Separator } from "@/components/ui/separator";
+import { useEffect } from "react";
 
 const Search = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const query: string | undefined = searchParams.get("q")?.trim();
   const exact: boolean = searchParams.get("exact") === "1";
 
@@ -50,7 +52,7 @@ const Search = () => {
     isPending,
     data: searchResults,
     isError,
-    error,
+    // error,
   } = useQuery<IApiResponse<IScholarlyArticle[]>>({
     // here query is made to lower case to avoid case sensitivity
     queryKey: ["search", query?.toLowerCase(), exact],
@@ -69,7 +71,9 @@ const Search = () => {
   }
 
   if (isError) {
-    return <div>Error: {error.message}</div>;
+    router.replace("/error");
+
+    return null;
   }
 
   return (
