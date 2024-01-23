@@ -22,8 +22,8 @@ export async function POST(request: Request): Promise<Response> {
   const nResults = 10;
   const jsonRequest = await request.json();
 
-  const query = jsonRequest.query;
-  const exact = jsonRequest.exact === "1";
+  const query: string = jsonRequest.query;
+  const exact: boolean = jsonRequest.exact as boolean;
 
   // If the query is empty, return a 400.
   if (!query || query.length === 0) {

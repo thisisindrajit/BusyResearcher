@@ -17,14 +17,14 @@ const Search = () => {
   const query: string | undefined = searchParams.get("q")?.trim();
   const exact: boolean = searchParams.get("exact") === "1";
 
-  const getSearchResults = async (
-    query: string
-  ): Promise<IApiResponse<IScholarlyArticle[]>> => {
+  const getSearchResults = async (): Promise<
+    IApiResponse<IScholarlyArticle[]>
+  > => {
     // If query is not available or is empty, throw an error
-    if(!query || query.length === 0) {
+    if (!query || query.length === 0) {
       throw new Error("No search query provided!");
     }
-    
+
     const apiResponse = await fetch(`api/search`, {
       method: "POST",
       headers: {
@@ -54,7 +54,7 @@ const Search = () => {
   } = useQuery<IApiResponse<IScholarlyArticle[]>>({
     // here query is made to lower case to avoid case sensitivity
     queryKey: ["search", query?.toLowerCase(), exact],
-    queryFn: ({ queryKey }) => getSearchResults(queryKey[1] as string),
+    queryFn: ({ queryKey }) => getSearchResults(),
     retry: 3, // Retry 3 times before failing
   });
 
@@ -63,6 +63,7 @@ const Search = () => {
       <LoadingHolder>
         Semantically searching 🤔 for{" "}
         <span className="text-primary font-bold">{query || "🫤"}</span>
+        {exact && " with exact matches"}
       </LoadingHolder>
     );
   }
@@ -75,11 +76,7 @@ const Search = () => {
     <>
       <TopBar />
       <div className="flex flex-col gap-4">
-        <CSearchBar
-          query={query}
-          exact={exact}
-          fullWidth
-        />
+        <CSearchBar query={query} exact={exact} fullWidth />
         <Separator className="bg-gradient-to-r from-background via-secondary to-background my-2" />
         <div className="flex flex-col gap-1 mb-2">
           <div className="text-2xl/relaxed">

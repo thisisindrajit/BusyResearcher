@@ -21,7 +21,8 @@ const CSearchBar: FC<CSearchBarProps> = ({
   fullWidth = false,
 }) => {
   const maxQueryTextLength = 200;
-  const [queryText, setQueryText] = useState<string>(query || "");
+  // const [queryText, setQueryText] = useState<string>(query || "");
+  const ref = useRef<HTMLInputElement>(null);
   const [
     showArticlesWithExactMatchesFilter,
     setShowArticlesWithExactMatchesFilter,
@@ -35,9 +36,8 @@ const CSearchBar: FC<CSearchBarProps> = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formattedQueryText = queryText
-      .trim()
-      .substring(0, maxQueryTextLength + 1);
+    const formattedQueryText =
+      ref.current?.value.trim().substring(0, maxQueryTextLength + 1) || "";
 
     if (formattedQueryText.length === 0) {
       // alert("Please enter a search query!");
@@ -57,7 +57,11 @@ const CSearchBar: FC<CSearchBarProps> = ({
   // }, []);
 
   useEffect(() => {
-    setQueryText(query || "");
+    // setQueryText(query || "");
+    if (ref && ref.current) {
+      ref.current.value = query || "";
+    }
+
     setShowArticlesWithExactMatchesFilter(exact || false);
   }, [query, exact]);
 
@@ -74,12 +78,13 @@ const CSearchBar: FC<CSearchBarProps> = ({
         className="border border-foreground flex items-center gap-1 p-1.5 rounded-[0.9rem] w-full"
       >
         <input
+          ref={ref}
           type="text"
           placeholder="Search for any topic..."
           className="p-2 bg-background outline-none flex-grow"
           maxLength={maxQueryTextLength}
-          value={queryText}
-          onChange={(e) => setQueryText(e.target.value)}
+          // value={queryText}
+          // onChange={(e) => setQueryText(e.target.value)}
         />
         <Button
           type="submit"
