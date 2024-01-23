@@ -23,7 +23,7 @@ async function getTotalCountFromApi(): Promise<IApiResponse<ITotalCountData>> {
   return jsonResponse;
 }
 
-const Home = async () => {
+const HomePage = async () => {
   const totalCountData: IApiResponse<ITotalCountData> =
     await getTotalCountFromApi();
 
@@ -127,4 +127,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default HomePage;

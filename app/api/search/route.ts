@@ -19,7 +19,7 @@ export interface IScholarlyArticle {
 
 export async function POST(request: Request): Promise<Response> {
   let apiResponse: IApiResponse<IScholarlyArticle[]>;
-  const nResults = 5;
+  const nResults = 10;
   const jsonRequest = await request.json();
 
   const query: string = jsonRequest.query;

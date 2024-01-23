@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { IScholarlyArticle } from "../api/search/route";
 import { IApiResponse } from "@/interfaces/IApiResponse";
 import LoadingHolder from "@/components/holders/LoadingHolder";
@@ -11,11 +11,10 @@ import ScholarlyArticleCard from "@/components/scholarly-article-card/ScholarlyA
 import Footer from "@/components/common/Footer";
 import CSearchBar from "@/components/common/CSearchBar";
 import { Separator } from "@/components/ui/separator";
-import { useEffect } from "react";
+import ErrorHolder from "@/components/holders/ErrorHolder";
 
-const Search = () => {
+const SearchPage = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const query: string | undefined = searchParams.get("q")?.trim();
   const exact: boolean = searchParams.get("exact") === "1";
 
@@ -52,7 +51,7 @@ const Search = () => {
     isPending,
     data: searchResults,
     isError,
-    // error,
+    error,
   } = useQuery<IApiResponse<IScholarlyArticle[]>>({
     // here query is made to lower case to avoid case sensitivity
     queryKey: ["search", query?.toLowerCase(), exact],
@@ -71,9 +70,15 @@ const Search = () => {
   }
 
   if (isError) {
-    router.replace("/error");
-
-    return null;
+    return (
+      <ErrorHolder
+        error={
+          query && query.length > 0
+            ? `Some error occurred while searching for ${query}! Please try again by making the query more specific and using exact matches filter (if needed) 😄`
+            : undefined
+        }
+      />
+    );
   }
 
   return (
@@ -112,4 +117,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchPage;
