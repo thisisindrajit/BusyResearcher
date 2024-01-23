@@ -73,7 +73,7 @@ const CSearchBar = () => {
           htmlFor="filter"
           className="text-sm/loose peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none cursor-pointer"
         >
-          Only show articles with exact query matches (Only articles which
+          Show articles with exact query matches (Only articles which
           contain the exact query in their title or abstract will be shown)
         </label>
       </div>

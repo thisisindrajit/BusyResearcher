@@ -35,3 +35,43 @@ body {
   @apply bg-background antialiased;
   font-family: var(--primary-font);
 }
+
+.scroll-shadows {
+  background: linear-gradient(#f2f2f2 33%, rgba(242, 242, 242, 0)),
+    linear-gradient(rgba(242, 242, 242, 0), #f2f2f2 66%) 0 100%,
+    radial-gradient(
+      farthest-side at 50% 0,
+      rgba(100, 100, 100, 0.5),
+      rgba(0, 0, 0, 0)
+    ),
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(100, 100, 100, 0.5),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
+  background-color: #f2f2f2;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+  background-size: 100% 60px, 100% 60px, 100% 20px, 100% 20px;
+}
+
+.dark .scroll-shadows {
+  background: linear-gradient(#151419 33%, rgba(21, 20, 25, 0)),
+    linear-gradient(rgba(21, 20, 25, 0), #151419 66%) 0 100%,
+    radial-gradient(
+      farthest-side at 50% 0,
+      rgba(140, 232, 229, 0.5),
+      rgba(0, 0, 0, 0)
+    ),
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(140, 232, 229, 0.5),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
+  background-color: #151419;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+  background-size: 100% 54px, 100% 54px, 100% 18px, 100% 18px;
+}

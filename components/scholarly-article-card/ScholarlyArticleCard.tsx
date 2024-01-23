@@ -34,6 +34,7 @@ const ScholarlyArticleCard: FC<{ data: IScholarlyArticle }> = ({ data }) => {
             title={data.title}
             authors={data.authors}
             abstract={fullAbstract}
+            published={data.published}
             categories={data.categories}
             category_ids={data.category_ids}
           />
